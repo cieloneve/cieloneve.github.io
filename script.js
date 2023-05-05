@@ -1,5 +1,13 @@
 var file
 var lim,limC,fes,fesC,fake,fakeC;
+function SaveAsFile(t,f,m) {
+    try {
+        var b = new Blob([t],{type:m});
+        saveAs(b, f);
+    } catch (e) {
+        window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
+    }
+}
 fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res001.json")
 .then(response => {
    return response.json();
@@ -131,3 +139,8 @@ $("ul b").click(function(index, element){
     }
     console.log(lim_NUM)
 });
+
+$("ul p").click(function(i,v){
+    
+    SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
+})
