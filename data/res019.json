@@ -1,1 +1,93 @@
-{"no006": {"group": 5, "lim": "no", "fes": "no", "fake": "yes", "attr": "green"}, "no007": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}, "no008": {"group": 5, "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, "no009": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "green"}, "no011": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, "no013": {"group": 5, "lim": "yes", "fes": "no", "fake": "no", "attr": "star"}, "no015": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, "no018": {"group": 5, "lim": "yes", "fes": "no", "fake": "no", "attr": "heart"}, "no019": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "moon"}, "no021": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "moon"}, "no022": {"group": 5, "lim": "yes", "fes": "yes", "fake": "no", "attr": "star"}, "no024": {"group": 5, "lim": "no", "fes": "no", "fake": "no", "attr": "green"}, "no025": {"group": 5, "lim": "yes", "fes": "no", "fake": "no", "attr": "heart"}}
+{
+"no006": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "yes",
+"attr": "green"
+},
+"no007": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "heart"
+},
+"no008": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "yes",
+"attr": "star"
+},
+"no009": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "green"
+},
+"no011": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "david"
+},
+"no013": {
+"group": 5,
+"lim": "yes",
+"fes": "no",
+"fake": "no",
+"attr": "star"
+},
+"no015": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "david"
+},
+"no019": {
+"group": 5,
+"lim": "yes",
+"fes": "no",
+"fake": "no",
+"attr": "heart"
+},
+"no021": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "moon"
+},
+"no022": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "moon"
+},
+"no023": {
+"group": 5,
+"lim": "yes",
+"fes": "yes",
+"fake": "no",
+"attr": "star"
+},
+"no024": {
+"group": 5,
+"lim": "no",
+"fes": "no",
+"fake": "no",
+"attr": "green"
+},
+"no025": {
+"group": 5,
+"lim": "yes",
+"fes": "no",
+"fake": "no",
+"attr": "heart"
+}
+}
