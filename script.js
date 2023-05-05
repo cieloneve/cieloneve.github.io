@@ -123,6 +123,9 @@ $("ul b").click(function(index, element){
     $('.gallery').empty()
 
     $("ul li").each(function(i,v){
+        if (i==26) {
+            return false;
+        }
         prefix="res"+$(this).attr("index")
         if(i%4==0&&i!=24)$('.gallery').append("<div class=aaa>",)
         $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))

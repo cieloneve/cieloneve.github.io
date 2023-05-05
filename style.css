@@ -1,17 +1,19 @@
 body {
     margin: 0;
     padding: 0;
-    font-family:  'Noto Sans TC',  sans-serif;
+    font-family:  'Noto Sans TC',  sans-serif;   
+    background-image: url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png);
     background-color: #f2f2f2; /* 背景色 */
 }
 
 header {
     width: 100%;
-    background-color: #8ed1e8;
+    background-color: #00cabc;
     color: #461c1c;
-    padding: 20px;
+    padding: 10px;
     position: fixed;
     top: 0;
+    font-size: 20px;
 }
 
 nav ul {
@@ -37,7 +39,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #000;
+    color: #111038;
 }
 
 .gallery {
@@ -95,7 +97,7 @@ p{
 }
 
 footer {
-    background-color: #8ed1e8;; /* 設定背景色 */
+    background-color: #00cabc;; /* 設定背景色 */
     color: #fff;
     padding: 20px;
     text-align: center; /* 讓文字置中 */
