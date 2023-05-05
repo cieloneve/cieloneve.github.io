@@ -1,30 +1,30 @@
 var file
 var lim,limC,fes,fesC,fake,fakeC;
-fetch("phttps://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res001.json")
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res001.json")
 .then(response => {
    return response.json();
 })
 .then(jsondata => console.log(jsondata));
 
-fetch("phttps://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json")
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json")
 .then(response => {
    return response.json();
 })
 .then(jsondata => {file=jsondata});
 
-fetch("phttps://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/lim.json")
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/lim.json")
     .then(response => {
     return response.json();
 })
 .then(jsondata => {lim=jsondata});
 
-fetch("phttps://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fes.json")
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fes.json")
     .then(response => {
     return response.json();
 })
 .then(jsondata => {fes=jsondata});
 
-fetch("phttps://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fake.json")
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fake.json")
     .then(response => {
     return response.json();
 })
