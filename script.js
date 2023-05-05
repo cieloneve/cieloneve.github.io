@@ -1,5 +1,5 @@
-var file
-var lim,limC,fes,fesC,fake,fakeC;
+var filefakeC
+var lim,fes,fake;
 function SaveAsFile(t,f,m) {
     try {
         var b = new Blob([t],{type:m});
@@ -109,10 +109,6 @@ $(".gallery").on("click","img",function(){
         $(this).attr("class","collected")
         collected["res"+$(this).attr("alt")].push($(this).attr("code"))
     }
-        
-    
-    
-
 })
 
 $('.gallery').on("contextmenu","img" ,function(){
@@ -121,16 +117,26 @@ $('.gallery').on("contextmenu","img" ,function(){
 
 $("ul b").click(function(index, element){
     lim_NUM=[]
-    
+    fes_NUM=[]
+    fake_NUM=[]
+    star4=0
     $('.gallery').empty()
 
     $("ul li").each(function(i,v){
         prefix="res"+$(this).attr("index")
         if(i%4==0&&i!=24)$('.gallery').append("<div class=aaa>",)
-        $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))       
-        $('.gallery').append("<p>",$(this).text()+" : "+collected[prefix].length)
+        $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))    
+        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))           
+        $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
+        star4+=collected[prefix].length;
     })
+
+    $('.gallery').append("<div class=aaa>",)
+    $('.gallery').append("<p\>總共 : "+String(star4))
     
+    $('.gallery').append("<div class=aaa>")
+    $('.gallery').append("<p\>限定")
     $('.gallery').append("<div class=aaa>")
     for(var i =0 ;i<lim_NUM.length;i++){
         $('.gallery').append(
@@ -138,7 +144,24 @@ $("ul b").click(function(index, element){
         )
         
     }
-    console.log(lim_NUM)
+    $('.gallery').append("<div class=aaa>")
+    $('.gallery').append("<p\>fes")
+    $('.gallery').append("<div class=aaa>")
+    for(var i =0 ;i<fes_NUM.length;i++){
+        $('.gallery').append(
+            "<div class=\"special\" style=\"background-image:url(small/"+fes_NUM[i]+".png)\"/>"
+        )
+        
+    }
+    $('.gallery').append("<div class=aaa>")
+    $('.gallery').append("<p\>假四星")
+    $('.gallery').append("<div class=aaa>")
+    for(var i =0 ;i<fake_NUM.length;i++){
+        $('.gallery').append(
+            "<div class=\"special\" style=\"background-image:url(small/"+fake_NUM[i]+".png)\"/>"
+        )
+        
+    }
 });
 
 $("ul p").click(function(i,v){
