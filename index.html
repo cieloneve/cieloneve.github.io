@@ -44,7 +44,14 @@
     </header>
 
     <main>
-      <div class="gallery"></div>
+      <div class="gallery">
+        <input
+          type="file"
+          id="filein"
+          accept="application/JSON"
+          onchange="loaddata();"
+        />
+      </div>
 
       <!-- <img src="small/res001/no004.png" alt="Picture 1" />
         <img src="small/res001/no004.png" alt="Picture 2" />

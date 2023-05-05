@@ -37,6 +37,7 @@ fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data
     return response.json();
 })
 .then(jsondata => {fake=jsondata});
+
 collected={
     "res001":[],
     "res002":[],
@@ -144,3 +145,31 @@ $("ul p").click(function(i,v){
     
     SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
+
+function loaddata() {
+	let url = URL.createObjectURL(filein.files[0]);
+	openfile(url, function (str) {
+		temp = JSON.parse(str);
+        if(temp.hasOwnProperty("res001"))collected=temp;
+		
+	});
+}
+
+function openfile(url, callback) {
+	if (typeof callback == "undefined") {
+		callback = function (str) {};
+	}
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", function () {
+		if (oReq.status != 404) {
+			callback(this.responseText);
+		} else {
+			callback('{}');
+		}
+	});
+	oReq.addEventListener("error", function () {
+		callback('{}');
+	});
+	oReq.open("GET", url);
+	oReq.send();
+}
