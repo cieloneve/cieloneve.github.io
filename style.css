@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* 背景色 */
+}
+
+header {
+    background-color: #8ed1e8; /* 標題欄的背景色 */
+    color: #461c1c;
+    padding: 20px;
+}
+
+nav ul {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+nav li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #000;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px auto;
+    max-width: 900px;
+    border-radius: 10px; /* 圖片區塊的圓角 */
+    overflow: hidden; /* 隱藏圓角外的部分 */
+}
+
+.gallery img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* 圖片縮放效果 */
+    border-radius: 5px; /* 圖片的圓角 */
+}
+
+.special{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 5px;
+    border-radius: 5px; /* 圖片的圓角 */
+    background-size: cover;
+}
+
+.collected{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* 圖片縮放效果 */
+    border-radius: 5px; /* 圖片的圓角 */
+    filter: brightness(0.4);
+}
+
+.gallery img:hover {
+    transform: scale(1.1); /* 當滑鼠移入時放大圖片 */
+}
+
+.aaa{
+    width: 100%;
+    margin: 10px;
+}
+p{
+    margin: 10px;
+}
+
+
+
+footer {
+    background-color: #8ed1e8;; /* 設定背景色 */
+    color: #fff;
+    padding: 20px;
+    text-align: center; /* 讓文字置中 */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal {
+    display: none; /* 初始隱藏 modal */
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 70%;
+    height: 70%;
+    background-color: rgba(0,0,0,0.8); /* 模態視窗的背景色 */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 5px; /* 圖片的圓角 */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* 圖片陰影效果 */
+}
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+  }
