@@ -115,6 +115,13 @@ $('.gallery').on("contextmenu","img" ,function(){
     return false;
 });
 
+$('.gallery').on("mouseenter","img" ,function(){
+    $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+"_normal.png")
+});
+$('.gallery').on("mouseleave","img" ,function(){
+    $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+".png")
+});
+
 $("ul b").click(function(index, element){
     lim_NUM=[]
     fes_NUM=[]
