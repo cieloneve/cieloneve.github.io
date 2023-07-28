@@ -1,1 +1,13 @@
-{"no006": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}, "no007": {"group": "ws", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, "no008": {"group": "25", "lim": "no", "fes": "no", "fake": "no", "attr": "star"}, "no011": {"group": "vbs", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, "no012": {"group": "mmj", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, "no015": {"group": "na", "lim": "yes", "fes": "no", "fake": "no", "attr": "moon"}, "no016": {"group": "ws", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, "no018": {"group": "vbs", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, "no020": {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, "no022": {"group": "mmj", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, "no025": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "green"}}
+{
+"no006": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}, 
+"no007": {"group": "ws", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, 
+"no008": {"group": "25", "lim": "no", "fes": "no", "fake": "no", "attr": "star"}, 
+"no011": {"group": "vbs", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, 
+"no012": {"group": "mmj", "lim": "no", "fes": "no", "fake": "yes", "attr": "star"}, 
+"no015": {"group": "na", "lim": "yes", "fes": "no", "fake": "no", "attr": "moon"}, 
+"no016": {"group": "ws", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, 
+"no018": {"group": "vbs", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, 
+"no020": {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, 
+"no022": {"group": "mmj", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, 
+"no025": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "green"}
+}
