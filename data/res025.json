@@ -9,5 +9,6 @@
 "no018": {"group": "vbs", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, 
 "no020": {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, 
 "no022": {"group": "mmj", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, 
-"no025": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "green"}
+"no025": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "green"},
+"no026": {"group": "ws", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}
 }
