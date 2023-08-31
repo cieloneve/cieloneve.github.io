@@ -1,5 +1,6 @@
 var filefakeC
 var lim,fes,fake;
+var tempRes = [{},{},{},{},{},{}]
 function SaveAsFile(t,f,m) {
     try {
         var b = new Blob([t],{type:m});
@@ -19,6 +20,42 @@ fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data
    return response.json();
 })
 .then(jsondata => {file=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res021.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[0]=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res022.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[1]=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res023.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[2]=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res024.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[3]=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res025.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[4]=jsondata});
+
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res026.json")
+.then(response => {
+   return response.json();
+})
+.then(jsondata => {tempRes[5]=jsondata});
 
 fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/lim.json")
     .then(response => {
@@ -127,12 +164,17 @@ $("ul b").click(function(index, element){
     fes_NUM=[]
     fake_NUM=[]
     star4=0
+    group=[0,0,0,0,0,0]
+    groupV=[0,0,0,0,0,0]
+    groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
     $('.gallery').empty()
 
     $("ul li").each(function(i,v){
+
         if (i==26) {
             return false;
         }
+
         prefix="res"+$(this).attr("index")
         if(i%4==0&&i!=24)$('.gallery').append("<div class=aaa>",)
         $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
@@ -140,7 +182,30 @@ $("ul b").click(function(index, element){
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))           
         $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
         star4+=collected[prefix].length;
+
+        if(i<20){
+            group[Math.floor((i)/4)]+=collected[prefix].length;
+        }
+        else{
+            console.log(tempRes[i-20])
+            collected["res0"+String(i+1)].forEach(function (item) {
+                if(tempRes[i-20][item]["group"]=="ln")groupV[0]++;
+                else if(tempRes[i-20][item]["group"]=="mmj")groupV[1]++;
+                else if(tempRes[i-20][item]["group"]=="vbs")groupV[2]++;
+                else if(tempRes[i-20][item]["group"]=="ws")groupV[3]++;
+                else if(tempRes[i-20][item]["group"]=="25")groupV[4]++;
+                else if(tempRes[i-20][item]["group"]=="na")groupV[5]++;
+                
+            });
+            
+        }
     })
+    
+    $('.gallery').append("<div class=aaa>",)
+    for(tempi=0;tempi<5;tempi++){
+        $('.gallery').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
+    }
+    $('.gallery').append("<p\>"+groupT[5]+" : "+groupV[5])
 
     $('.gallery').append("<div class=aaa>",)
     $('.gallery').append("<p\>總共 : "+String(star4))
