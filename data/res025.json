@@ -10,5 +10,6 @@
 "no020": {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "david"}, 
 "no022": {"group": "mmj", "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}, 
 "no025": {"group": "ln", "lim": "no", "fes": "no", "fake": "no", "attr": "green"},
-"no026": {"group": "ws", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}
+"no026": {"group": "ws", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"},
+"no030": {"group": "na", "lim": "yes", "fes": "yes", "fake": "no", "attr": "moon"}
 }
