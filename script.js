@@ -112,7 +112,8 @@ count={
 
 $("ul li").click(function(){
     $('.gallery').empty()
-
+    $('.hint').empty()
+    
     for(var i=0;i<file["res"+$(this).attr("index")].length;i++){
         let path=$(this).attr("index")+"/"+file["res"+$(this).attr("index")][i];
 
