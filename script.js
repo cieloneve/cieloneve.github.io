@@ -1,6 +1,6 @@
-var filefakeC
 var lim,fes,fake;
 var tempRes = [{},{},{},{},{},{}]
+
 function SaveAsFile(t,f,m) {
     try {
         var b = new Blob([t],{type:m});
@@ -9,12 +9,7 @@ function SaveAsFile(t,f,m) {
         window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
     }
 }
-fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res001.json")
-.then(response => {
-   return response.json();
-})
-.then(jsondata => console.log(jsondata));
-
+// read json-------------------------------------------------------------------------------------------
 fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json")
 .then(response => {
    return response.json();
@@ -74,7 +69,7 @@ fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data
     return response.json();
 })
 .then(jsondata => {fake=jsondata});
-
+//var definition ------------------------------------------------------------------------------------------------------------
 collected={
     "res001":[],
     "res002":[],
@@ -109,7 +104,7 @@ count={
     "fes":0,
     "fake":0
 }
-
+//collection------------------------------------------------------------------------------------------------------------
 $("ul li").click(function(){
     $('.gallery').empty()
     $('.hint').empty()
@@ -201,16 +196,16 @@ $("ul b").click(function(index, element){
             
         }
     })
-    
+//group------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
     for(tempi=0;tempi<5;tempi++){
         $('.gallery').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
     }
     $('.gallery').append("<p\>"+groupT[5]+" : "+groupV[5])
-
+//total------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
     $('.gallery').append("<p\>總共 : "+String(star4))
-    
+//lim ------------------------------------------------------------------------------------------------------------------------------    
     $('.gallery').append("<div class=aaa>")
     $('.gallery').append("<p\>限定")
     $('.gallery').append("<div class=aaa>")
@@ -220,6 +215,7 @@ $("ul b").click(function(index, element){
         )
         
     }
+//fes ------------------------------------------------------------------------------------------------------------------------------
     $('.gallery').append("<div class=aaa>")
     $('.gallery').append("<p\>fes")
     $('.gallery').append("<div class=aaa>")
@@ -229,6 +225,7 @@ $("ul b").click(function(index, element){
         )
         
     }
+//fake ------------------------------------------------------------------------------------------------------------------------------
     $('.gallery').append("<div class=aaa>")
     $('.gallery').append("<p\>假四星")
     $('.gallery').append("<div class=aaa>")
