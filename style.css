@@ -54,8 +54,8 @@ nav a:hover {
 
 .gallery img {
     
-    width: 150px;
-    height: 150px;
+    width: 128px;
+    height: 128px;
     object-fit: cover;
     margin: 10px;
     cursor: pointer;
@@ -74,8 +74,8 @@ nav a:hover {
 }
 
 .collected{
-    width: 150px;
-    height: 150px;
+    width: 128px;
+    height: 128px;
     object-fit: cover;
     margin: 10px;
     cursor: pointer;
