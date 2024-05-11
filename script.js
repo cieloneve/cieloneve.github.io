@@ -1,4 +1,4 @@
-var lim,fes,fake;
+var lim,fes,fake,flim;
 var tempRes = [{},{},{},{},{},{}]
 
 function SaveAsFile(t,f,m) {
@@ -69,6 +69,11 @@ fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data
     return response.json();
 })
 .then(jsondata => {fake=jsondata});
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fakelim.json")
+    .then(response => {
+    return response.json();
+})
+.then(jsondata => {flim=jsondata});
 //var definition ------------------------------------------------------------------------------------------------------------
 collected={
     "res001":[],
@@ -102,6 +107,7 @@ collected={
 count={
     "lim":0,
     "fes":0,
+    "flim":0,
     "fake":0
 }
 //collection------------------------------------------------------------------------------------------------------------
@@ -158,10 +164,11 @@ $('.gallery').on("mouseleave","img" ,function(){
 $("ul b").click(function(index, element){
     lim_NUM=[]
     fes_NUM=[]
+    flim_NUM=[]
     fake_NUM=[]
     star4=0
     group=[0,0,0,0,0,0]
-    groupV=[0,0,0,0,0,0]
+    groupV=[0,0,0,0,0,0,0]
     groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
     $('.gallery').empty()
 
@@ -174,7 +181,8 @@ $("ul b").click(function(index, element){
         prefix="res"+$(this).attr("index")
         if(i%4==0&&i!=24)$('.gallery').append("<div class=aaa>",)
         $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))    
+        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))           
         $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
         star4+=collected[prefix].length;
@@ -183,28 +191,31 @@ $("ul b").click(function(index, element){
             group[Math.floor((i)/4)]+=collected[prefix].length;
         }
         else{
-            console.log(tempRes[i-20])
+            //console.log(tempRes[i-20])
             collected["res0"+String(i+1)].forEach(function (item) {
                 if(tempRes[i-20][item]["group"]=="ln")groupV[0]++;
                 else if(tempRes[i-20][item]["group"]=="mmj")groupV[1]++;
                 else if(tempRes[i-20][item]["group"]=="vbs")groupV[2]++;
                 else if(tempRes[i-20][item]["group"]=="ws")groupV[3]++;
                 else if(tempRes[i-20][item]["group"]=="25")groupV[4]++;
-                else if(tempRes[i-20][item]["group"]=="na")groupV[5]++;
-                
+                else if(tempRes[i-20][item]["group"]=="na")groupV[5]++;                
             });
             
         }
     })
 //group------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
+    $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")
+    $('.gallery').append("<div class=aaa>",)
     for(tempi=0;tempi<5;tempi++){
+        groupV[6]+=groupV[tempi];
         $('.gallery').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
     }
+    groupV[6]+=groupV[5];
     $('.gallery').append("<p\>"+groupT[5]+" : "+groupV[5])
 //total------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
-    $('.gallery').append("<p\>總共 : "+String(star4))
+    $('.gallery').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
 //lim ------------------------------------------------------------------------------------------------------------------------------    
     $('.gallery').append("<div class=aaa>")
     $('.gallery').append("<p\>限定")
@@ -225,6 +236,16 @@ $("ul b").click(function(index, element){
         )
         
     }
+//fake lim ------------------------------------------------------------------------------------------------------------------------------
+$('.gallery').append("<div class=aaa>")
+$('.gallery').append("<p\>近藤騙錢爛限定")
+$('.gallery').append("<div class=aaa>")
+for(var i =0 ;i<flim_NUM.length;i++){
+    $('.gallery').append(
+        "<div class=\"special\" style=\"background-image:url(small/"+flim_NUM[i]+".png)\"/>"
+    )
+    
+}    
 //fake ------------------------------------------------------------------------------------------------------------------------------
     $('.gallery').append("<div class=aaa>")
     $('.gallery').append("<p\>假四星")
@@ -238,7 +259,6 @@ $("ul b").click(function(index, element){
 });
 
 $("ul p").click(function(i,v){
-    
     SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 
