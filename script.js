@@ -114,6 +114,8 @@ count={
 $("ul li").click(function(){
     $('.gallery').empty()
     $('.hint').empty()
+
+    $("body").css("background","url(small/res"+$(this).attr("index")+"/banner"+".png) 0% 0% / cover fixed");
     
     for(var i=0;i<file["res"+$(this).attr("index")].length;i++){
         let path=$(this).attr("index")+"/"+file["res"+$(this).attr("index")][i];
@@ -172,6 +174,8 @@ $("ul b").click(function(index, element){
     groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
     $('.gallery').empty()
 
+    $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
+
     $("ul li").each(function(i,v){
 
         if (i==26) {
@@ -185,6 +189,7 @@ $("ul b").click(function(index, element){
         $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))           
         $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
+        
         star4+=collected[prefix].length;
 
         if(i<20){
