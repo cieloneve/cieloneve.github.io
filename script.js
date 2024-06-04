@@ -115,7 +115,7 @@ $("ul li").click(function(){
     $('.gallery').empty()
     $('.hint').empty()
 
-    $("body").css("background","url(small/res"+$(this).attr("index")+"/banner"+".png) 0% 0% / cover fixed");
+    $("body").css("background","url(small/res"+$(this).attr("index")+"/banner"+".jpg) 0% 0% / cover fixed");
     
     for(var i=0;i<file["res"+$(this).attr("index")].length;i++){
         let path=$(this).attr("index")+"/"+file["res"+$(this).attr("index")][i];
