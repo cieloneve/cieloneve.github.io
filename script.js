@@ -250,23 +250,23 @@ $("ul b").click(function(index, element){
         
     }
 //BF ------------------------------------------------------------------------------------------------------------------------------
-$('.gallery').append("<div class=aaa>")
-$('.gallery').append("<p\>尊爵不凡 bloom fes")
-$('.gallery').append("<div class=aaa>")
-for(var i =0 ;i<flim_NUM.length;i++){
-    $('.gallery').append(
-        "<div class=\"special\" style=\"background-image:url(small/"+bf_NUM[i]+".png)\"/>"
-    )
+    $('.gallery').append("<div class=aaa>")
+    $('.gallery').append("<p\>尊爵不凡 bloom fes")
+    $('.gallery').append("<div class=aaa>")
+    for(var i =0 ;i<bf_NUM.length;i++){
+        $('.gallery').append(
+            "<div class=\"special\" style=\"background-image:url(small/"+bf_NUM[i]+".png)\"/>"
+        )
     
 } 
 //fake lim ------------------------------------------------------------------------------------------------------------------------------
-$('.gallery').append("<div class=aaa>")
-$('.gallery').append("<p\>近藤騙錢爛限定")
-$('.gallery').append("<div class=aaa>")
-for(var i =0 ;i<flim_NUM.length;i++){
-    $('.gallery').append(
-        "<div class=\"special\" style=\"background-image:url(small/"+flim_NUM[i]+".png)\"/>"
-    )
+    $('.gallery').append("<div class=aaa>")
+    $('.gallery').append("<p\>近藤騙錢爛限定")
+    $('.gallery').append("<div class=aaa>")
+    for(var i =0 ;i<flim_NUM.length;i++){
+        $('.gallery').append(
+            "<div class=\"special\" style=\"background-image:url(small/"+flim_NUM[i]+".png)\"/>"
+        )
     
 }    
 //fake ------------------------------------------------------------------------------------------------------------------------------
