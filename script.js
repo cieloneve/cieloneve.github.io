@@ -1,4 +1,4 @@
-var lim,fes,fake,flim;
+var lim,fes,fake,flim,bf;
 var tempRes = [{},{},{},{},{},{}]
 
 function SaveAsFile(t,f,m) {
@@ -74,6 +74,11 @@ fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data
     return response.json();
 })
 .then(jsondata => {flim=jsondata});
+fetch("https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json")
+    .then(response => {
+    return response.json();
+})
+.then(jsondata => {bf=jsondata});
 //var definition ------------------------------------------------------------------------------------------------------------
 collected={
     "res001":[],
@@ -168,6 +173,8 @@ $("ul b").click(function(index, element){
     fes_NUM=[]
     flim_NUM=[]
     fake_NUM=[]
+    bf_NUM=[]
+
     star4=0
     group=[0,0,0,0,0,0]
     groupV=[0,0,0,0,0,0,0]
@@ -187,7 +194,8 @@ $("ul b").click(function(index, element){
         $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
-        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))           
+        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
         $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
         
         star4+=collected[prefix].length;
@@ -241,6 +249,16 @@ $("ul b").click(function(index, element){
         )
         
     }
+//BF ------------------------------------------------------------------------------------------------------------------------------
+$('.gallery').append("<div class=aaa>")
+$('.gallery').append("<p\>尊爵不凡 bloom fes")
+$('.gallery').append("<div class=aaa>")
+for(var i =0 ;i<flim_NUM.length;i++){
+    $('.gallery').append(
+        "<div class=\"special\" style=\"background-image:url(small/"+bf_NUM[i]+".png)\"/>"
+    )
+    
+} 
 //fake lim ------------------------------------------------------------------------------------------------------------------------------
 $('.gallery').append("<div class=aaa>")
 $('.gallery').append("<p\>近藤騙錢爛限定")
