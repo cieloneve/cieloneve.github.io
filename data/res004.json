@@ -17,5 +17,6 @@
 "no032" : {"group": 1, "lim": "no", "fes": "no", "fake": "no", "attr": "david"},
 "no033" : {"group": 1, "lim": "yes", "fes": "no", "fake": "no", "attr": "moon"},
 "no036" : {"group": 1, "lim": "no", "fes": "no", "fake": "no", "attr": "heart"},
-"no038" : {"group": 1, "lim": "no", "fes": "no", "fake": "no", "attr": "star"}
+"no038" : {"group": 1, "lim": "no", "fes": "no", "fake": "no", "attr": "star"},
+"no040" : {"group": 1, "lim": "yes", "fes": "no", "fake": "no", "attr": "green"}
 }
