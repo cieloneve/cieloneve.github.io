@@ -82,9 +82,4 @@ def addCard():
     tool.addPics(cardNum,res_s,no_s)
     
 
-
-
-
-
-
 addCard()
