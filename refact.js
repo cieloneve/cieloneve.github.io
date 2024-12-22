@@ -98,6 +98,8 @@ $('.gallery').on("mouseleave","img" ,function(){
 });
 
 $("ul b").click(function(index, element){
+    $('.gallery').empty();
+    $('.hint').empty();
     lim_NUM=[]
     fes_NUM=[]
     flim_NUM=[]

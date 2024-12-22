@@ -1,13 +1,22 @@
-function SaveAsFile(t,f,m) {
-    try {
-        var b = new Blob([t],{type:m});
-        saveAs(b, f);
-    } catch (e) {
-        window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
-    }
+function SaveAsFile() {
+    record[userNameEncrypted] = CryptoJS.AES.encrypt(JSON.stringify(collected), Math.E.toString()).toString();
+    $.ajax({
+        
+        url: "https://docs.google.com/forms/u/0/d/e/1FAIpQLScQSz-APwiTTyfzr63kHGc56nBaG-X25G9MLPkT9NZv3vl7_A/formResponse",
+        crossDomain: true,
+        data: {
+          "entry.784132201": userNameEncrypted,
+          "entry.1653586583": record[userNameEncrypted]
+        },
+        type: "POST", 
+        dataType: "JSONP",
+        complete: function () {
+            alert("已存檔")
+        }
+    });
 }
 // read json-------------------------------------------------------------------------------------------
-var file, lim, fes, fake, flim, bf, record, userName="";
+var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
 
 const urls = [
@@ -23,12 +32,13 @@ const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fake.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fakelim.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json",
-    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/user/record.json"
+    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/user/record.json",
+    'https://sheets.googleapis.com/v4/spreadsheets/1mUR2MkKO8fVWAGrwKsqTauvhPHX9Zy_9ELt7PW-QB6U/values/record?alt=json&key=AIzaSyBSdX63RDDUrBRO5jZ1EHd7VtbbwITMT1c'
 ];
 
 Promise.all(urls.map(url => fetch(url).then(response => response.json())))
     .then(data => {
-        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record] = data;
+        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record, userData] = data;
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -99,6 +109,8 @@ $('.gallery').on("mouseleave","img" ,function(){
 });
 
 $("ul b").click(function(index, element){
+    $('.gallery').empty();
+    $('.hint').empty();
     lim_NUM=[]
     fes_NUM=[]
     flim_NUM=[]
@@ -174,7 +186,7 @@ appendGallerySection("假四星", fake_NUM);
 });
 
 $("ul p").click(function(i,v){
-    SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
+    SaveAsFile();
 })
 
 function loaddata() {
@@ -223,7 +235,47 @@ $(".btn1").click(function(i,v){
         return
     }
     else{
-        $(".album").css("display","")
+        initRecord()
+        if(Object.keys(record).some(isExisted)){
+            $(".album").css("display","")
+            $(".gallery").empty()
+            $(".hint").empty()
+            $(".hint").css("font-size","20px")
+            $(".hint").append("<p/>點選上方角色名稱開始  左鍵收藏  右鍵取消收藏")
+            $(".hint").append("<p> 要離開之前記得按存檔</p>")
+        }
+        else{
+            alert("尚未有存檔，先讀入檔案，或開始新的存檔")
+            userNameEncrypted = CryptoJS.AES.encrypt(userName, Math.E.toString()).toString();
+            $(".album").css("display","")
+            $(".gallery").empty()
+            $(".hint").empty()
+
+            $('.gallery').append(" <input type='file' id='filein' accept='application/JSON' onchange='loaddata();'/>")
+            $('.hint').append("使用說明：最好用電腦，左鍵選擇，右鍵取消，存檔會存在雲端，不會存在本機")
+        }
+        
     }
 })
+
+function isExisted(e, index, array) {
+    if (CryptoJS.AES.decrypt(e, Math.E.toString()).toString(CryptoJS.enc.Utf8)==userName){
+        console.log(CryptoJS.AES.decrypt(e, Math.E.toString()).toString(CryptoJS.enc.Utf8))
+        userNameEncrypted = e;
+        collected = JSON.parse(CryptoJS.AES.decrypt(record[e], Math.E.toString()).toString(CryptoJS.enc.Utf8));
+        return true;
+    }
+    
+    else{
+        return false;
+    }
+    
+}
+
+function initRecord(){
+    array_temp = userData["values"]
+    array_temp.forEach(function (item) {
+        record[item[1]] = item[2];
+    });
+}
 
