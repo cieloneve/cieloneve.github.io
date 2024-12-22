@@ -7,7 +7,7 @@ function SaveAsFile(t,f,m) {
     }
 }
 // read json-------------------------------------------------------------------------------------------
-var file, lim, fes, fake, flim, bf, record;
+var file, lim, fes, fake, flim, bf, record, userName="";
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
 
 const urls = [
@@ -22,12 +22,13 @@ const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fes.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fake.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fakelim.json",
-    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json"
+    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json",
+    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/user/record.json"
 ];
 
 Promise.all(urls.map(url => fetch(url).then(response => response.json())))
     .then(data => {
-        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf] = data;
+        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record] = data;
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -214,4 +215,15 @@ function appendGallerySection(title, numArray) {
         );
     }
 }
+
+$(".btn1").click(function(i,v){
+    userName = $("input[type=text][name=inputField]").val();
+    if(userName==""){
+        alert("請輸入名字")
+        return
+    }
+    else{
+        $(".album").css("display","")
+    }
+})
 

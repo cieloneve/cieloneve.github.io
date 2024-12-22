@@ -17,7 +17,7 @@
   <body>
     <header>
       <nav>
-        <ul class="album">
+        <ul class="album" style="display: none;">
           <li index="001"><a href="#">一歌</a></li>
           <li index="002"><a href="#">咲希</a></li>
           <li index="003"><a href="#">穗波</a></li>
@@ -45,7 +45,7 @@
           <li index="025"><a href="#">大姐</a></li>
           <li index="026"><a href="#">大哥</a></li>
           <b style="margin-right: 10px"><a href="#">統計</a></b>
-          <p><a href="#">註冊</a></p>
+          <p><a href="#">存檔</a></p>
           <li style="margin-left: 10px">
             <a href="https://sekai.best/">Viewer</a>
           </li>
@@ -55,17 +55,15 @@
 
     <main>
       <div class="gallery">
-        <form>
-          <label for="inputField">輸入名稱: </label>
-          <input
-            type="text"
-            id="inputField"
-            name="inputField"
-            pattern="[A-Za-z0-9]+"
-            title="只能輸入大小寫英文和數字的組合"
-          />
-          <button class="btn1" type="submit">確認</button>
-        </form>
+        <label for="inputField">輸入名稱: </label>
+        <input
+          type="text"
+          id="inputField"
+          name="inputField"
+          pattern="[A-Za-z0-9]+"
+          title="只能輸入大小寫英文和數字的組合"
+        />
+        <button class="btn1" type="submit">確認</button>
       </div>
       <div style="text-align: center" class="hint">
         使用說明：輸入暱稱(英數)
