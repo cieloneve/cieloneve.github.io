@@ -15,6 +15,15 @@ function SaveAsFile() {
         }
     });
 }
+function DownloadAsFile(t,f,m){
+    try {
+        var b = new Blob([t],{type:m});
+        saveAs(b, f);
+    } catch (e) {
+        window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
+    }
+}
+//console.log(CryptoJS.AES.decrypt("", Math.E.toString()).toString(CryptoJS.enc.Utf8))
 // read json-------------------------------------------------------------------------------------------
 var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
@@ -185,8 +194,12 @@ appendGallerySection("假四星", fake_NUM);
 
 });
 
-$("ul p").click(function(i,v){
+$("ul .save").click(function(i,v){
     SaveAsFile();
+})
+
+$("ul .download").click(function(i,v){
+    DownloadAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 
 function loaddata() {
