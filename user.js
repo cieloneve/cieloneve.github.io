@@ -1,5 +1,3 @@
-var str = CryptoJS.AES.encrypt("cyulun", "cyulun").toString()
-console.log(str)
 function SaveAsFile(t,f,m) {
     try {
         var b = new Blob([t],{type:m});
@@ -9,7 +7,7 @@ function SaveAsFile(t,f,m) {
     }
 }
 // read json-------------------------------------------------------------------------------------------
-var file, lim, fes, fake, flim, bf;
+var file, lim, fes, fake, flim, bf, record;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
 
 const urls = [
