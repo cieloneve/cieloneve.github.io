@@ -1,3 +1,5 @@
+var str = CryptoJS.AES.encrypt("cyulun", "cyulun").toString()
+console.log(str)
 function SaveAsFile(t,f,m) {
     try {
         var b = new Blob([t],{type:m});
@@ -214,3 +216,4 @@ function appendGallerySection(title, numArray) {
         );
     }
 }
+
