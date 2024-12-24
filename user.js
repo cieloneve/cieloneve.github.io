@@ -23,7 +23,6 @@ function DownloadAsFile(t,f,m){
         window.open("data:"+m+"," + encodeURIComponent(t), '_blank','');
     }
 }
-//console.log(CryptoJS.AES.decrypt("", Math.E.toString()).toString(CryptoJS.enc.Utf8))
 // read json-------------------------------------------------------------------------------------------
 var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
@@ -207,7 +206,6 @@ function loaddata() {
 	openfile(url, function (str) {
 		temp = JSON.parse(str);
         if(temp.hasOwnProperty("res001"))collected=temp;
-		
 	});
 }
 
@@ -254,7 +252,7 @@ $(".btn1").click(function(i,v){
             $(".gallery").empty()
             $(".hint").empty()
             $(".hint").css("font-size","20px")
-            $(".hint").append("<p/>點選上方角色名稱開始  左鍵收藏  右鍵取消收藏")
+            $(".hint").append("<p/>使用說明：點選上方角色名稱開始，左鍵選擇，右鍵取消，存檔會存在雲端，下載會存在本機")
             $(".hint").append("<p> 要離開之前記得按存檔</p>")
         }
         else{
@@ -265,7 +263,7 @@ $(".btn1").click(function(i,v){
             $(".hint").empty()
 
             $('.gallery').append(" <input type='file' id='filein' accept='application/JSON' onchange='loaddata();'/>")
-            $('.hint').append("使用說明：最好用電腦，左鍵選擇，右鍵取消，存檔會存在雲端，不會存在本機")
+            $('.hint').append("使用說明：點選上方角色名稱開始，左鍵選擇，右鍵取消，存檔會存在雲端，下載會存在本機")
         }
         
     }
