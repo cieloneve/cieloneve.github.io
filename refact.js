@@ -105,6 +105,7 @@ $("ul b").click(function(index, element){
     flim_NUM=[]
     fake_NUM=[]
     bf_NUM=[]
+    ranking=[]
 
     star4=0
     group=[0,0,0,0,0,0]
@@ -131,6 +132,8 @@ $("ul b").click(function(index, element){
         
         star4+=collected[prefix].length;
 
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":collected[prefix].length*100/file[prefix].length})
+        
         if(i<20){
             group[Math.floor((i)/4)]+=collected[prefix].length;
         }
@@ -147,6 +150,8 @@ $("ul b").click(function(index, element){
             
         }
     })
+    ranking.sort((a,b)=>(b.number - a.number))
+    console.log(ranking)
 //group------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
     $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")

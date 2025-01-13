@@ -124,6 +124,7 @@ $("ul b").click(function(index, element){
     flim_NUM=[]
     fake_NUM=[]
     bf_NUM=[]
+    ranking = []
 
     star4=0
     group=[0,0,0,0,0,0]
@@ -147,7 +148,7 @@ $("ul b").click(function(index, element){
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
         $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
-        
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":collected[prefix].length*100/file[prefix].length})
         star4+=collected[prefix].length;
 
         if(i<20){
@@ -166,6 +167,9 @@ $("ul b").click(function(index, element){
             
         }
     })
+    ranking.sort((a,b)=>(b.number - a.number))
+    putOnChara()
+    console.log(ranking)
 //group------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
     $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")
