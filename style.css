@@ -4,6 +4,10 @@ body {
     font-family:  'Noto Sans TC',  sans-serif;   
     /*background-image: url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png);*/
     background-color: #f2f2f2; /* 背景色 */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+     -ms-text-size-adjust: none;
+         text-size-adjust: none;  
 }
 
 header {
