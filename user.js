@@ -26,6 +26,7 @@ function DownloadAsFile(t,f,m){
 // read json-------------------------------------------------------------------------------------------
 var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
+var ranking = []
 
 const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json",
@@ -116,6 +117,17 @@ $('.gallery').on("mouseleave","img" ,function(){
     $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+".png")
 });
 
+$(".gallery").on("click",".star",function(){
+    mode = 1
+    $('.stats').empty()
+    putOnChara()
+})
+$(".gallery").on("click",".default",function(){
+    mode = 0
+    $('.stats').empty()
+    putOnChara()
+})
+
 $("ul b").click(function(index, element){
     $('.gallery').empty();
     $('.hint').empty();
@@ -131,7 +143,7 @@ $("ul b").click(function(index, element){
     groupV=[0,0,0,0,0,0,0]
     groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
     $('.gallery').empty()
-
+    $('.gallery').append("<div class=stats>")
     $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
 
     $("ul li").each(function(i,v){
@@ -141,13 +153,13 @@ $("ul b").click(function(index, element){
         }
 
         prefix="res"+$(this).attr("index")
-        if(i%4==0&&i!=24)$('.gallery').append("<div class=aaa>",)
+        
         $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
-        $('.gallery').append("<p\>"+$(this).text()+" : "+collected[prefix].length)
+        
         ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":collected[prefix].length*100/file[prefix].length})
         star4+=collected[prefix].length;
 
@@ -167,9 +179,9 @@ $("ul b").click(function(index, element){
             
         }
     })
-    ranking.sort((a,b)=>(b.number - a.number))
+    
     putOnChara()
-    console.log(ranking)
+    
 //group------------------------------------------------------------------------------------------------------------------------------  
     $('.gallery').append("<div class=aaa>",)
     $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")
@@ -293,4 +305,21 @@ function initRecord(){
         record[item[1]] = item[2];
     });
 }
-
+function putOnChara(){
+    if(mode){
+        $('.stats').append("<div class='default'>",)
+        temp = Array.from(ranking)
+        temp.sort((a,b)=>(b.number - a.number))
+        for (let i = 0; i < 26; i++) {
+            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString()+"("+temp[i].ratio.toString()+"%) ")
+        }
+    }
+    else{
+        $('.stats').append("<div class='star'>",)
+        for (let i = 0; i < 26; i++) {
+            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+            $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
+        }
+    }
+}

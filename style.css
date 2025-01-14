@@ -87,7 +87,32 @@ nav a:hover {
 .gallery img:hover {
     transform: scale(1.1); /* 當滑鼠移入時放大圖片 */
 }
-
+.star{
+    width: 100%;
+    height: 30px;
+    background-image: url("btn/star4.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.star:hover{
+    background-image: url("btn/star4_hover.png");
+}
+.default{
+    background-image: url("btn/default.png");
+    width: 100%;
+    height: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.default:hover{
+    background-image: url("btn/default_hover.png");
+}
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 900px;
+}
 .aaa{
     width: 100%;
     margin: 10px;
