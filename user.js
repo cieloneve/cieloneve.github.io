@@ -24,7 +24,7 @@ function DownloadAsFile(t,f,m){
     }
 }
 // read json-------------------------------------------------------------------------------------------
-var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted;
+var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted,mode = 0;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
 var ranking = []
 
@@ -160,7 +160,7 @@ $("ul b").click(function(index, element){
         $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
         $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
         
-        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":collected[prefix].length*100/file[prefix].length})
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length)})
         star4+=collected[prefix].length;
 
         if(i<20){

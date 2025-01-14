@@ -143,7 +143,7 @@ $("ul b").click(function(index, element){
         
         star4+=collected[prefix].length;
 
-        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":collected[prefix].length*100/file[prefix].length})
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length)})
 
         if(i<20){
             group[Math.floor((i)/4)]+=collected[prefix].length;
