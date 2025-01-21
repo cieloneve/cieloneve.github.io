@@ -19,5 +19,6 @@
 "no046" : {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "green"},
 "no047" : {"group": "vbs", "lim": "yes", "fes": "no", "fake": "no", "attr": "moon"},
 "no048" : {"group": "na", "lim": "no", "fes": "no", "fake": "no", "attr": "david"},
-"no050" : {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"}
+"no050" : {"group": "mmj", "lim": "no", "fes": "no", "fake": "no", "attr": "heart"},
+"no052" : {"group": "na", "lim": "yes", "fes": "no", "fake": "no", "attr": "david"}
 }
