@@ -4,3 +4,5 @@ style copy.css
 readme.md
 cards.json
 checkData.py
+events.py
+eventCards.json
