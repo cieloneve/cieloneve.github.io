@@ -287,7 +287,7 @@ function stat(){
     groupV=[0,0,0,0,0,0,0]
     groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
     
-    $('.gallery').append("<div class=stats>")
+    
     $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
 
     $("ul li").each(function(i,v){
