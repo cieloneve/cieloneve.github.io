@@ -33,7 +33,7 @@ def get_database():
 
 def download_database():
     data = get_database()
-    with open("cards.json","w") as f:
+    with open("./data/cards.json","w") as f:
         f.write(json.dumps(data))
 
 def get_res_no(id,database):
@@ -52,6 +52,7 @@ def get_res_no(id,database):
         return(res,no,attr,group)
     except:
         return False
+
 def get_res_nos(ids,database):
     for id in ids:
         print(get_res_no(id,database))
@@ -67,8 +68,4 @@ def get_4stars(database):
     return raw
 
 if __name__=="__main__":
-    card_num = int(input("Number of cards : "))
-    database = get_database()
-    get_Lim(database)
-    for _ in range(card_num):
-        print(get_res_no(int(input("card_id : ")),database))
+    pass

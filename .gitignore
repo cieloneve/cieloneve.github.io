@@ -2,7 +2,7 @@ index copy.html
 refact copy.js
 style copy.css
 readme.md
-cards.json
+data/cards.json
 checkData.py
 events.py
-eventCards.json
+data/eventCards.json
