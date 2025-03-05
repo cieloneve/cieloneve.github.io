@@ -1,6 +1,22 @@
 import requests
 import json
 
+'''
+skill_ID:
+4: 120
+7: P100
+10: H100
+11: 130
+12: H140
+13: P140
+15: LN150
+16: MMJ150
+17: VBS150
+18: WS150
+19: N150
+23: OC160
+24: V160
+'''
 group_mapping = {"school_refusal":"25", "idol":"mmj", "light_sound":"ln", "none":"na", "street":"vbs", "theme_park":"ws"}
 attr_mapping = {"cool":"david", "pure":"green", "cute":"star", "happy":"heart", "mysterious":"moon"}
 
