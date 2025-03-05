@@ -111,14 +111,25 @@ $('.stats').on("click",".default",function(){
 $("ul b").click(function(){
     stat()
     putOnChara()
-//special cards display-----------------------------------------------------------------------------------------
+    //special cards display-----------------------------------------------------------------------------------------
     appendAllSpecialCards()
 });
 
 $("ul p").click(function(i,v){
     SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
-
+$(".gallery").on("click","input",function(){
+    if($(this).attr("id")=="filein"){}
+    else{
+        displayFlag.forEach((e)=>{
+            if(e["title"]==$(this).attr("name"))
+                e["flag"]=$(this).is(":checked");
+        })
+        $('.gallery').empty()
+        appendAllSpecialCards()
+    }
+    
+})
 function loaddata() {
 	let url = URL.createObjectURL(filein.files[0]);
 	openfile(url, function (str) {
@@ -201,11 +212,13 @@ function stat(){
     $('.gallery').empty();
     $('.stats').empty();
     $('.hint').empty();
-    displayFlag[0]["data"]=[]
-    displayFlag[1]["data"]=[]
-    displayFlag[2]["data"]=[]
-    displayFlag[3]["data"]=[]
-    displayFlag[4]["data"]=[]
+    displayFlag = [
+        {"flag":0,"title":"限定","data":[]},
+        {"flag":0,"title":"fes","data":[]},
+        {"flag":0,"title":"尊爵不凡 bloom fes","data":[]},
+        {"flag":0,"title":"近藤騙錢爛限定","data":[]},
+        {"flag":0,"title":"假四星","data":[]},
+    ]; //0:lim 1:fes 2:bf 3:fakelim 4:fake
     ranking=[]
 
     star4=0
