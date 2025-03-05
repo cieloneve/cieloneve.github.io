@@ -128,74 +128,9 @@ $(".gallery").on("click",".default",function(){
     putOnChara()
 })
 
-$("ul b").click(function(index, element){
-    $('.gallery').empty();
-    $('.hint').empty();
-    lim_NUM=[]
-    fes_NUM=[]
-    flim_NUM=[]
-    fake_NUM=[]
-    bf_NUM=[]
-    ranking = []
-
-    star4=0
-    group=[0,0,0,0,0,0]
-    groupV=[0,0,0,0,0,0,0]
-    groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
-    $('.gallery').empty()
-    $('.gallery').append("<div class=stats>")
-    $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
-
-    $("ul li").each(function(i,v){
-
-        if (i==26) {
-            return false;
-        }
-
-        prefix="res"+$(this).attr("index")
-        
-        $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
-        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
-        
-        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length)})
-        star4+=collected[prefix].length;
-
-        if(i<20){
-            group[Math.floor((i)/4)]+=collected[prefix].length;
-        }
-        else{
-            //console.log(tempRes[i-20])
-            collected["res0"+String(i+1)].forEach(function (item) {
-                if(tempRes[i-20][item]["group"]=="ln")groupV[0]++;
-                else if(tempRes[i-20][item]["group"]=="mmj")groupV[1]++;
-                else if(tempRes[i-20][item]["group"]=="vbs")groupV[2]++;
-                else if(tempRes[i-20][item]["group"]=="ws")groupV[3]++;
-                else if(tempRes[i-20][item]["group"]=="25")groupV[4]++;
-                else if(tempRes[i-20][item]["group"]=="na")groupV[5]++;                
-            });
-            
-        }
-    })
-    
+$("ul b").click(function(){
+    stat()
     putOnChara()
-    
-//group------------------------------------------------------------------------------------------------------------------------------  
-    $('.gallery').append("<div class=aaa>",)
-    $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")
-    $('.gallery').append("<div class=aaa>",)
-    for(tempi=0;tempi<5;tempi++){
-        groupV[6]+=groupV[tempi];
-        $('.gallery').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
-    }
-    groupV[6]+=groupV[5];
-    $('.gallery').append("<p\>"+groupT[5]+" : "+groupV[5])
-//total-----------------------------------------------------------------------------------------------------------------------------
-    $('.gallery').append("<div class=aaa>",)
-    $('.gallery').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
-
 //lim ------------------------------------------------------------------------------------------------------------------------------
 appendGallerySection("限定", lim_NUM);
 //fes ------------------------------------------------------------------------------------------------------------------------------
@@ -206,7 +141,6 @@ appendGallerySection("尊爵不凡 bloom fes", bf_NUM);
 appendGallerySection("近藤騙錢爛限定", flim_NUM);
 //fake -----------------------------------------------------------------------------------------------------------------------------
 appendGallerySection("假四星", fake_NUM);
-
 });
 
 $("ul .save").click(function(i,v){
@@ -246,7 +180,7 @@ function openfile(url, callback) {
 
 function appendGallerySection(title, numArray) {
     $('.gallery').append("<div class='aaa'></div>");
-    $('.gallery').append("<p>" + title + "</p>");
+    $('.gallery').append("<label class = 'specialCard'><input type='checkbox' name='"+title+"'><span>" + title + "</span></label>");
     $('.gallery').append("<div class='aaa'></div>");
     for (var i = 0; i < numArray.length; i++) {
         $('.gallery').append(
@@ -322,4 +256,72 @@ function putOnChara(){
             $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
         }
     }
+//group------------------------------------------------------------------------------------------------------------------------------  
+    $('.stats').append("<div class=aaa>",)
+    $('.stats').append("<p\>加號左邊為原創角，右邊為V家")
+    $('.stats').append("<div class=aaa>",)
+    for(tempi=0;tempi<5;tempi++){
+        $('.stats').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
+    }
+    $('.stats').append("<p\>"+groupT[5]+" : "+groupV[5])
+//total-----------------------------------------------------------------------------------------------------------------------------
+    $('.stats').append("<div class=aaa>",)
+    $('.stats').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
+}
+function stat(){
+    $('.gallery').empty();
+    $('.hint').empty();
+    lim_NUM=[]
+    fes_NUM=[]
+    flim_NUM=[]
+    fake_NUM=[]
+    bf_NUM=[]
+    ranking=[]
+
+    star4=0
+    group=[0,0,0,0,0,0]
+    groupV=[0,0,0,0,0,0,0]
+    groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
+    $('.gallery').empty()
+    $('.gallery').append("<div class=stats>")
+    $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
+
+    $("ul li").each(function(i,v){
+
+        if (i==26) {
+            return false;
+        }
+
+        prefix="res"+$(this).attr("index")
+        $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
+        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
+        
+        
+        star4+=collected[prefix].length;
+
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length)})
+
+        if(i<20){
+            group[Math.floor((i)/4)]+=collected[prefix].length;
+        }
+        else{
+            //console.log(tempRes[i-20])
+            collected["res0"+String(i+1)].forEach(function (item) {
+                if(tempRes[i-20][item]["group"]=="ln")groupV[0]++;
+                else if(tempRes[i-20][item]["group"]=="mmj")groupV[1]++;
+                else if(tempRes[i-20][item]["group"]=="vbs")groupV[2]++;
+                else if(tempRes[i-20][item]["group"]=="ws")groupV[3]++;
+                else if(tempRes[i-20][item]["group"]=="25")groupV[4]++;
+                else if(tempRes[i-20][item]["group"]=="na")groupV[5]++;                
+            });
+            
+        }
+    })
+    for(tempi=0;tempi<5;tempi++){
+        groupV[6]+=groupV[tempi];
+    }
+    groupV[6]+=groupV[5];
 }

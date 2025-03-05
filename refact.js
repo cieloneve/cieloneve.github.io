@@ -109,7 +109,93 @@ $(".gallery").on("click",".default",function(){
     putOnChara()
 })
 
-$("ul b").click(function(index, element){
+$("ul b").click(function(){
+    stat()
+    putOnChara()
+//lim ------------------------------------------------------------------------------------------------------------------------------
+appendGallerySection("限定", lim_NUM);
+//fes ------------------------------------------------------------------------------------------------------------------------------
+appendGallerySection("fes", fes_NUM);
+//BF -------------------------------------------------------------------------------------------------------------------------------
+appendGallerySection("尊爵不凡 bloom fes", bf_NUM);
+//fake lim -------------------------------------------------------------------------------------------------------------------------
+appendGallerySection("近藤騙錢爛限定", flim_NUM);
+//fake -----------------------------------------------------------------------------------------------------------------------------
+appendGallerySection("假四星", fake_NUM);
+});
+
+$("ul p").click(function(i,v){
+    SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
+})
+
+function loaddata() {
+	let url = URL.createObjectURL(filein.files[0]);
+	openfile(url, function (str) {
+		temp = JSON.parse(str);
+        if(temp.hasOwnProperty("res001"))collected=temp;
+		
+	});
+}
+
+function openfile(url, callback) {
+	if (typeof callback == "undefined") {
+		callback = function (str) {};
+	}
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", function () {
+		if (oReq.status != 404) {
+			callback(this.responseText);
+		} else {
+			callback('{}');
+		}
+	});
+	oReq.addEventListener("error", function () {
+		callback('{}');
+	});
+	oReq.open("GET", url);
+	oReq.send();
+}
+
+function appendGallerySection(title, numArray) {
+    $('.gallery').append("<div class='aaa'></div>");
+    $('.gallery').append("<label class = 'specialCard'><input type='checkbox' name='"+title+"'><span>" + title + "</span></label>");
+    $('.gallery').append("<div class='aaa'></div>");
+    for (var i = 0; i < numArray.length; i++) {
+        $('.gallery').append(
+            "<div class='special' style='background-image:url(small/" + numArray[i] + ".png)'></div>"
+        );
+    }
+}
+function putOnChara(){
+    if(mode){
+        $('.stats').append("<div class='default'>",)
+        temp = Array.from(ranking)
+        temp.sort((a,b)=>(b.number - a.number))
+        for (let i = 0; i < 26; i++) {
+            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString()+"("+temp[i].ratio.toString()+"%) ")
+        }
+    }
+    else{
+        $('.stats').append("<div class='star'>",)
+        for (let i = 0; i < 26; i++) {
+            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+            $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
+        }
+    }
+//group------------------------------------------------------------------------------------------------------------------------------  
+    $('.stats').append("<div class=aaa>",)
+    $('.stats').append("<p\>加號左邊為原創角，右邊為V家")
+    $('.stats').append("<div class=aaa>",)
+    for(tempi=0;tempi<5;tempi++){
+        $('.stats').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
+    }
+    $('.stats').append("<p\>"+groupT[5]+" : "+groupV[5])
+//total-----------------------------------------------------------------------------------------------------------------------------
+    $('.stats').append("<div class=aaa>",)
+    $('.stats').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
+}
+function stat(){
     $('.gallery').empty();
     $('.hint').empty();
     lim_NUM=[]
@@ -161,93 +247,8 @@ $("ul b").click(function(index, element){
             
         }
     })
-    
-    putOnChara()
-
-//group------------------------------------------------------------------------------------------------------------------------------  
-    $('.gallery').append("<div class=aaa>",)
-    $('.gallery').append("<p\>加號左邊為原創角，右邊為V家")
-    $('.gallery').append("<div class=aaa>",)
     for(tempi=0;tempi<5;tempi++){
         groupV[6]+=groupV[tempi];
-        $('.gallery').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
     }
     groupV[6]+=groupV[5];
-    $('.gallery').append("<p\>"+groupT[5]+" : "+groupV[5])
-//total-----------------------------------------------------------------------------------------------------------------------------
-    $('.gallery').append("<div class=aaa>",)
-    $('.gallery').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
-
-//lim ------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("限定", lim_NUM);
-//fes ------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("fes", fes_NUM);
-//BF -------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("尊爵不凡 bloom fes", bf_NUM);
-//fake lim -------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("近藤騙錢爛限定", flim_NUM);
-//fake -----------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("假四星", fake_NUM);
-
-});
-
-$("ul p").click(function(i,v){
-    SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
-})
-
-function loaddata() {
-	let url = URL.createObjectURL(filein.files[0]);
-	openfile(url, function (str) {
-		temp = JSON.parse(str);
-        if(temp.hasOwnProperty("res001"))collected=temp;
-		
-	});
-}
-
-function openfile(url, callback) {
-	if (typeof callback == "undefined") {
-		callback = function (str) {};
-	}
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", function () {
-		if (oReq.status != 404) {
-			callback(this.responseText);
-		} else {
-			callback('{}');
-		}
-	});
-	oReq.addEventListener("error", function () {
-		callback('{}');
-	});
-	oReq.open("GET", url);
-	oReq.send();
-}
-
-function appendGallerySection(title, numArray) {
-    $('.gallery').append("<div class='aaa'></div>");
-    $('.gallery').append("<p>" + title + "</p>");
-    $('.gallery').append("<div class='aaa'></div>");
-    for (var i = 0; i < numArray.length; i++) {
-        $('.gallery').append(
-            "<div class='special' style='background-image:url(small/" + numArray[i] + ".png)'></div>"
-        );
-    }
-}
-function putOnChara(){
-    if(mode){
-        $('.stats').append("<div class='default'>",)
-        temp = Array.from(ranking)
-        temp.sort((a,b)=>(b.number - a.number))
-        for (let i = 0; i < 26; i++) {
-            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString()+"("+temp[i].ratio.toString()+"%) ")
-        }
-    }
-    else{
-        $('.stats').append("<div class='star'>",)
-        for (let i = 0; i < 26; i++) {
-            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-            $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
-        }
-    }
 }

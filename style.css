@@ -164,3 +164,39 @@ footer {
     color: #fff;
     cursor: pointer;
   }
+  
+.specialCard {
+    padding: 0;
+    margin-right: 3px;
+    cursor: pointer;
+}
+input[type=checkbox] {
+    display: none;
+}
+input[type=checkedbox] {
+    display: none;
+}
+input[type=checkbox]+span {
+    display: inline-block;
+    background-color: #ffffff;
+    padding: 3px 6px;
+    border: 1px solid gray;
+    color: #000000;
+    user-select: none; /* 防止文字被滑鼠選取反白 */
+    border-radius: 1rem;
+}
+
+input[type=checkbox]:checked+span {
+    color: rgb(255, 255, 255);
+    background-color: #00cabc;
+}
+
+input[type=checkedbox]+span {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    padding: 3px 6px;
+    border: 1px solid gray;
+    background-color: #00cabc;
+    user-select: none; /* 防止文字被滑鼠選取反白 */
+    border-radius: 1rem;
+}
