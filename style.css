@@ -18,6 +18,7 @@ header {
     position: fixed;
     top: 0;
     font-size: 20px;
+    z-index: 999;
 }
 
 nav ul {
@@ -116,6 +117,9 @@ nav a:hover {
     flex-wrap: wrap;
     justify-content: center;
     max-width: 900px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 20%);
 }
 .aaa{
     width: 100%;

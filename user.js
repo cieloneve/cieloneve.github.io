@@ -26,6 +26,13 @@ function DownloadAsFile(t,f,m){
 // read json-------------------------------------------------------------------------------------------
 var file, lim, fes, fake, flim, bf, record, userName="", userData, userNameEncrypted,mode = 0;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
+var displayFlag = [
+    {"flag":0,"title":"限定","data":[]},
+    {"flag":0,"title":"fes","data":[]},
+    {"flag":0,"title":"尊爵不凡 bloom fes","data":[]},
+    {"flag":0,"title":"近藤騙錢爛限定","data":[]},
+    {"flag":0,"title":"假四星","data":[]},
+]; //0:lim 1:fes 2:bf 3:fakelim 4:fake
 var ranking = []
 
 const urls = [
@@ -57,16 +64,10 @@ for (let i = 1; i <= 26; i++) {
     const key = `res${String(i).padStart(3, '0')}`;
     collected[key] = [];
 }
-
-count={
-    "lim":0,
-    "fes":0,
-    "flim":0,
-    "fake":0
-}
 //collection------------------------------------------------------------------------------------------------------------
 $("ul li").click(function(){
     $('.gallery').empty()
+    $('.stats').empty();
     $('.hint').empty()
 
     $("body").css("background","url(small/res"+$(this).attr("index")+"/banner"+".jpg) 0% 0% / cover fixed");
@@ -98,31 +99,29 @@ $('.gallery').on('mousedown',"img",function(e){
         }
     }
 });
-
+//img action----------------------------------------------------------------------------------------------------
 $(".gallery").on("click","img",function(){
     if($(this).attr("class")!="collected"){
         $(this).attr("class","collected")
         collected["res"+$(this).attr("alt")].push($(this).attr("code"))
     }
 })
-
 $('.gallery').on("contextmenu","img" ,function(){
     return false;
 });
-
 $('.gallery').on("mouseenter","img" ,function(){
     $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+"_normal.png")
 });
 $('.gallery').on("mouseleave","img" ,function(){
     $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+".png")
 });
-
-$(".gallery").on("click",".star",function(){
+//---------------------------------------------------------------------------------------------------------------
+$('.stats').on("click",".star",function(){
     mode = 1
     $('.stats').empty()
     putOnChara()
 })
-$(".gallery").on("click",".default",function(){
+$('.stats').on("click",".default",function(){
     mode = 0
     $('.stats').empty()
     putOnChara()
@@ -131,16 +130,8 @@ $(".gallery").on("click",".default",function(){
 $("ul b").click(function(){
     stat()
     putOnChara()
-//lim ------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("限定", lim_NUM);
-//fes ------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("fes", fes_NUM);
-//BF -------------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("尊爵不凡 bloom fes", bf_NUM);
-//fake lim -------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("近藤騙錢爛限定", flim_NUM);
-//fake -----------------------------------------------------------------------------------------------------------------------------
-appendGallerySection("假四星", fake_NUM);
+//special cards display-----------------------------------------------------------------------------------------
+    appendAllSpecialCards()
 });
 
 $("ul .save").click(function(i,v){
@@ -178,17 +169,27 @@ function openfile(url, callback) {
 	oReq.send();
 }
 
-function appendGallerySection(title, numArray) {
+function appendGallerySection(e) {
     $('.gallery').append("<div class='aaa'></div>");
-    $('.gallery').append("<label class = 'specialCard'><input type='checkbox' name='"+title+"'><span>" + title + "</span></label>");
+    if(e["flag"])
+        $('.gallery').append("<label class = 'specialCard'><input type='checkedbox' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
+    else
+        $('.gallery').append("<label class = 'specialCard'><input type='checkbox' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
     $('.gallery').append("<div class='aaa'></div>");
-    for (var i = 0; i < numArray.length; i++) {
-        $('.gallery').append(
-            "<div class='special' style='background-image:url(small/" + numArray[i] + ".png)'></div>"
-        );
+    if(e["flag"]){
+        for (var i = 0; i < e["data"].length; i++) {
+            $('.gallery').append(
+                "<div class='special' style='background-image:url(small/" + e["data"][i] + ".png)'></div>"
+            );
+        }
     }
+    
 }
-
+function appendAllSpecialCards(){
+    displayFlag.forEach((e)=>{
+        appendGallerySection(e)
+    })
+}
 $(".btn1").click(function(i,v){
     userName = $("input[type=text][name=inputField]").val();
     if(userName==""){
@@ -200,6 +201,7 @@ $(".btn1").click(function(i,v){
         if(Object.keys(record).some(isExisted)){
             $(".album").css("display","")
             $(".gallery").empty()
+            $('.stats').empty();
             $(".hint").empty()
             $(".hint").css("font-size","20px")
             $(".hint").append("<p/>使用說明：點選上方角色名稱開始，左鍵選擇，右鍵取消，存檔會存在雲端，下載會存在本機")
@@ -210,6 +212,7 @@ $(".btn1").click(function(i,v){
             userNameEncrypted = CryptoJS.AES.encrypt(userName, Math.E.toString()).toString();
             $(".album").css("display","")
             $(".gallery").empty()
+            $('.stats').empty();
             $(".hint").empty()
 
             $('.gallery').append(" <input type='file' id='filein' accept='application/JSON' onchange='loaddata();'/>")
@@ -270,19 +273,20 @@ function putOnChara(){
 }
 function stat(){
     $('.gallery').empty();
+    $('.stats').empty();
     $('.hint').empty();
-    lim_NUM=[]
-    fes_NUM=[]
-    flim_NUM=[]
-    fake_NUM=[]
-    bf_NUM=[]
+    displayFlag[0]["data"]=[]
+    displayFlag[1]["data"]=[]
+    displayFlag[2]["data"]=[]
+    displayFlag[3]["data"]=[]
+    displayFlag[4]["data"]=[]
     ranking=[]
 
     star4=0
     group=[0,0,0,0,0,0]
     groupV=[0,0,0,0,0,0,0]
     groupT=["L/N","MMJ","VBS","WS","ニ-ゴ","無團體V"]
-    $('.gallery').empty()
+    
     $('.gallery').append("<div class=stats>")
     $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
 
@@ -293,11 +297,11 @@ function stat(){
         }
 
         prefix="res"+$(this).attr("index")
-        $.merge(lim_NUM, $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(fes_NUM, $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(flim_NUM, $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
-        $.merge(fake_NUM, $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(bf_NUM, $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))             
+        $.merge(displayFlag[0]["data"], $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(displayFlag[1]["data"], $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(displayFlag[2]["data"], $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))
+        $.merge(displayFlag[3]["data"], $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
+        $.merge(displayFlag[4]["data"], $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))                 
         
         
         star4+=collected[prefix].length;
