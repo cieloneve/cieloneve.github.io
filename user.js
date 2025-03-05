@@ -142,7 +142,7 @@ $("ul .download").click(function(i,v){
     DownloadAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 $(".gallery").on("click","input",function(){
-    if($(this).attr("type")!='checkbox' && $(this).attr("type")!='checkedbox'){}
+    if($(this).attr("id")!="check"){}
     else{
         displayFlag.forEach((e)=>{
             if(e["title"]==$(this).attr("name"))
@@ -183,9 +183,9 @@ function openfile(url, callback) {
 function appendGallerySection(e) {
     $('.gallery').append("<div class='aaa'></div>");
     if(e["flag"])
-        $('.gallery').append("<label class = 'specialCard'><input type='checkedbox' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
+        $('.gallery').append("<label class = 'specialCard'><input type='checkedbox' id='check' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
     else
-        $('.gallery').append("<label class = 'specialCard'><input type='checkbox' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
+        $('.gallery').append("<label class = 'specialCard'><input type='checkbox' id='check' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
     $('.gallery').append("<div class='aaa'></div>");
     if(e["flag"]){
         for (var i = 0; i < e["data"].length; i++) {

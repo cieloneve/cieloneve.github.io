@@ -111,7 +111,7 @@ $('.stats').on("click",".default",function(){
 $("ul b").click(function(){
     stat()
     putOnChara()
-    //special cards display-----------------------------------------------------------------------------------------
+//special cards display-----------------------------------------------------------------------------------------
     appendAllSpecialCards()
 });
 
@@ -119,7 +119,7 @@ $("ul p").click(function(i,v){
     SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 $(".gallery").on("click","input",function(){
-    if($(this).attr("type")!='checkbox' && $(this).attr("type")!='checkedbox'){}
+    if($(this).attr("id")!="check"){}
     else{
         displayFlag.forEach((e)=>{
             if(e["title"]==$(this).attr("name"))
