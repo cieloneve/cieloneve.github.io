@@ -119,7 +119,7 @@ $("ul p").click(function(i,v){
     SaveAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 $(".gallery").on("click","input",function(){
-    if($(this).attr("id")=="filein"){}
+    if($(this).attr("type")!='checkbox' && $(this).attr("type")!='checkedbox'){}
     else{
         displayFlag.forEach((e)=>{
             if(e["title"]==$(this).attr("name"))
