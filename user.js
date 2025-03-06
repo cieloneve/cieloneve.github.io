@@ -65,7 +65,7 @@ for (let i = 1; i <= 26; i++) {
     collected[key] = [];
 }
 //collection------------------------------------------------------------------------------------------------------------
-$("ul li").click(function(){
+$(".character").click(function(){
     $('.gallery').empty()
     $('.stats').empty();
     $('.hint').empty()
@@ -127,18 +127,18 @@ $('.stats').on("click",".default",function(){
     putOnChara()
 })
 
-$("ul b").click(function(){
+$("#total").click(function(){
     stat()
     putOnChara()
     //special cards display-----------------------------------------------------------------------------------------
     appendAllSpecialCards()
 });
 
-$("ul .save").click(function(i,v){
+$("#save").click(function(i,v){
     SaveAsFile();
 })
 
-$("ul .download").click(function(i,v){
+$("#download").click(function(i,v){
     DownloadAsFile(JSON.stringify(collected),"collected.json","text/plain;charset=utf-8");
 })
 $(".gallery").on("click","input",function(){
@@ -303,19 +303,18 @@ function stat(){
     
     $("body").css("background","url(https://assets.pjsek.ai/file/pjsekai-assets/startapp/story/background/epilogue-story/background.png) fixed");
 
-    $("ul li").each(function(i,v){
+    $(".character").each(function(i,v){
 
         if (i==26) {
             return false;
         }
 
         prefix="res"+$(this).attr("index")
-        $.merge(displayFlag[0]["data"], $(collected[prefix]).filter(lim[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(displayFlag[1]["data"], $(collected[prefix]).filter(fes[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(displayFlag[2]["data"], $(collected[prefix]).filter(bf[prefix]).toArray().map(function(e){return prefix+"/"+e}))
-        $.merge(displayFlag[3]["data"], $(collected[prefix]).filter(flim[prefix]).toArray().map(function(e){return prefix+"/"+e}))        
-        $.merge(displayFlag[4]["data"], $(collected[prefix]).filter(fake[prefix]).toArray().map(function(e){return prefix+"/"+e}))                 
-        
+        $.merge(displayFlag[0]["data"], $(collected[prefix]).filter(lim[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[1]["data"], $(collected[prefix]).filter(fes[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[2]["data"], $(collected[prefix]).filter(bf[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[3]["data"], $(collected[prefix]).filter(flim[prefix]).toArray().map( e => prefix+"/"+e))        
+        $.merge(displayFlag[4]["data"], $(collected[prefix]).filter(fake[prefix]).toArray().map( e => prefix+"/"+e))         
         
         star4+=collected[prefix].length;
 
