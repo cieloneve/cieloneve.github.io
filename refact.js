@@ -7,7 +7,7 @@ function SaveAsFile(t,f,m) {
     }
 }
 // read json-------------------------------------------------------------------------------------------
-var file, lim, fes, fake, flim, bf, mode = 0;
+var file, lim, fes, fake, flim, bf, mode = 0, attr = 0;
 var tempRes = [{}, {}, {}, {}, {}, {}]; // 0:res021, 1:res022, 2:res023, 3:res024, 4:res025, 5:res026
 var displayFlag = [
     {"flag":0,"title":"限定","data":[]},
@@ -39,7 +39,7 @@ Promise.all(urls.map(url => fetch(url).then(response => response.json())))
     })
     .catch(error => console.error('Error fetching data:', error));
 
-//var definition ------------------------------------------------------------------------------------------------------------
+//var definition -------------------------------------------------------------------------------------------------------
 collected = {};
 for (let i = 1; i <= 26; i++) {
     const key = `res${String(i).padStart(3, '0')}`;
@@ -70,7 +70,7 @@ $(".character").click(function(){
         )
     }
 });
-
+//img action------------------------------------------------------------------------------------------------------------
 $('.gallery').on('mousedown',"img",function(e){
     if(e.which==3){
         if($(this).attr("class")=="collected"){
@@ -80,7 +80,6 @@ $('.gallery').on('mousedown',"img",function(e){
         }
     }
 });
-//img action----------------------------------------------------------------------------------------------------
 $(".gallery").on("click","img",function(){
     if($(this).attr("class")!="collected"){
         $(this).attr("class","collected")
@@ -97,14 +96,14 @@ $('.gallery').on("mouseleave","img" ,function(){
     $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+".png")
 });
 //---------------------------------------------------------------------------------------------------------------
-$('.stats').on("click",".star",function(){
-    mode = 1
-    $('.stats').empty()
-    putOnChara()
-})
-$('.stats').on("click",".default",function(){
-    mode = 0
-    $('.stats').empty()
+$(".stats").on("change","select",function(){
+    if($(this).attr('id')=="sorting"){
+        mode = parseInt($('#sorting option:selected').attr('index'),10)
+    }
+    else{
+        attr = parseInt($('#attr option:selected').attr('index'),10)
+        console.log(attr)
+    }
     putOnChara()
 })
 
@@ -180,8 +179,9 @@ function appendAllSpecialCards(){
     })
 }
 function putOnChara(){
-    if(mode){
-        $('.stats').append("<div class='default'>",)
+    $('.stats').empty()
+    addDropDown()
+    if(mode == 1){
         temp = Array.from(ranking)
         temp.sort((a,b)=>(b.number - a.number))
         for (let i = 0; i < 26; i++) {
@@ -190,7 +190,6 @@ function putOnChara(){
         }
     }
     else{
-        $('.stats').append("<div class='star'>",)
         for (let i = 0; i < 26; i++) {
             if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
             $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
@@ -267,4 +266,34 @@ function stat(){
         groupV[6]+=groupV[tempi];
     }
     groupV[6]+=groupV[5];
+}
+
+function addDropDown(){
+    $(".stats").append("\
+        <div class='selection'>\
+          <select id='sorting'>\
+            <option value='Default' index='0'>預設排序</option>\
+            <option value='Star4' index='1'>4星數</option>\
+            <!--option value='Percentage' index='2'>百分比</option>\
+            <option value='Lim' index='3'>真限定數</option>\
+            <option value='LimP' index='4'>真限定百分比</option--></select\
+          ><!--select id='attr'>\
+            <option value='all' index='0'>全部屬性</option>\
+            <option value='green' index='1'>綠草🌱</option>\
+            <option value='david' index='2'>藍星✡️</option>\
+            <option value='star' index='3'>粉星🌟</option>\
+            <option value='moon' index='4'>紫月🌙</option>\
+            <option value='heart' index='5'>橘心🩷</option>\
+          </select>\
+        </div -->")
+    $('#sorting').children().each(function(){
+        if(parseInt($(this).attr('index'),10)==mode){
+            $(this).attr("selected", true);
+        }
+    })
+    $('#attr').children().each(function(){
+        if(parseInt($(this).attr('index'),10)==attr){
+            $(this).attr("selected", true);
+        }
+    })
 }
