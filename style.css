@@ -51,7 +51,7 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 120px auto 50px auto;
+    margin: 1rem auto 50px auto;
     max-width: 900px;
     border-radius: 10px; /* 圖片區塊的圓角 */
     overflow: hidden; /* 隱藏圓角外的部分 */
@@ -119,7 +119,7 @@ nav a:hover {
     max-width: 900px;
     position: relative;
     left: 50%;
-    transform: translate(-50%, 20%);
+    transform: translate(-50%, 0%);
 }
 .aaa{
     width: 100%;
@@ -203,4 +203,21 @@ input[type=checkedbox]+span {
     background-color: #00cabc;
     user-select: none; /* 防止文字被滑鼠選取反白 */
     border-radius: 1rem;
+}
+.selection {
+    display: flex;
+}
+select {
+    font-size: 20px;
+    font-family: 'Noto Sans TC';
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    border-radius: 1rem;
+    border-color: darkturquoise;
+    padding: 0 0.3rem 0 0.3rem;
+    margin: 0 0.1rem 0 0.1rem;
+}
+.None {
+    margin-bottom: calc(140px - 3%);
 }
