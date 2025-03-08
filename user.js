@@ -260,7 +260,7 @@ function putOnChara(){
         temp.sort((a,b)=>(b.number - a.number))
         for (let i = 0; i < 26; i++) {
             if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString()+"("+temp[i].ratio.toString()+"%) ")
+            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
         }
     }
     else if(mode == 0){
