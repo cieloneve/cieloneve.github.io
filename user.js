@@ -255,27 +255,30 @@ function initRecord(){
 function putOnChara(){
     $('.stats').empty()
     addDropDown()
-    if(mode == 1){
-        temp = Array.from(ranking)
-        temp.sort((a,b)=>(b.number - a.number))
-        for (let i = 0; i < 26; i++) {
-            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-            $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
-        }
-    }
-    else if(mode == 0){
-        for (let i = 0; i < 26; i++) {
-            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-            $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
-        }
-    }
-    else{
-        temp = Array.from(ranking)
-        temp.sort((a,b)=>(b.ratio - a.ratio))
-        for (let i = 0; i < 26; i++) {
-            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
-                $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].ratio.toString()+"%("+temp[i].number.toString()+")")
-        }
+    temp = Array.from(ranking)
+    switch (mode) {
+        case 0:
+            for (let i = 0; i < 26; i++) {
+                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
+            }
+            break;
+        case 1:
+            temp.sort((a,b)=>(b.number - a.number))
+            for (let i = 0; i < 26; i++) {
+                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
+            }
+            break;
+        case 2:
+            temp.sort((a,b)=>(b.ratio - a.ratio))
+            for (let i = 0; i < 26; i++) {
+                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                    $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].ratio.toString()+"%("+temp[i].number.toString()+")")
+            }
+            break;
+        default:
+            break;
     }
 //group------------------------------------------------------------------------------------------------------------------------------  
     $('.stats').append("<div class=aaa>",)
