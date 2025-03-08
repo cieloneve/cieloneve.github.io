@@ -263,10 +263,18 @@ function putOnChara(){
             $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString()+"("+temp[i].ratio.toString()+"%) ")
         }
     }
-    else{
+    else if(mode == 0){
         for (let i = 0; i < 26; i++) {
             if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
             $('.stats').append("<p\>"+ranking[i].name+" : "+ranking[i].number.toString())
+        }
+    }
+    else{
+        temp = Array.from(ranking)
+        temp.sort((a,b)=>(b.ratio - a.ratio))
+        for (let i = 0; i < 26; i++) {
+            if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].ratio.toString()+"%("+temp[i].number.toString()+")")
         }
     }
 //group------------------------------------------------------------------------------------------------------------------------------  
@@ -347,8 +355,8 @@ function addDropDown(){
           <select id='sorting'>\
             <option value='Default' index='0'>預設排序</option>\
             <option value='Star4' index='1'>4星數</option>\
-            <!--option value='Percentage' index='2'>百分比</option>\
-            <option value='Lim' index='3'>真限定數</option>\
+            <option value='Percentage' index='2'>百分比</option>\
+            <!--option value='Lim' index='3'>真限定數</option>\
             <option value='LimP' index='4'>真限定百分比</option--></select\
           ><!--select id='attr'>\
             <option value='all' index='0'>全部屬性</option>\
