@@ -277,6 +277,20 @@ function putOnChara(){
                     $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].ratio.toString()+"%("+temp[i].number.toString()+")")
             }
             break;
+        case 3:
+            temp.sort((a,b)=>(b.lim - a.lim))
+            for (let i = 0; i < 26; i++) {
+                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].lim.toString())
+            }
+            break;
+        case 4:
+            temp.sort((a,b)=>(b.lim_ratio - a.lim_ratio))
+            for (let i = 0; i < 26; i++) {
+                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                    $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].lim_ratio.toString()+"%("+temp[i].lim.toString()+")")
+            }
+            break;    
         default:
             break;
     }
@@ -328,7 +342,7 @@ function stat(){
         
         star4+=collected[prefix].length;
 
-        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length)})
+        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length),"lim":$(collected[prefix]).filter(lim[prefix]).toArray().length,'lim_ratio':Math.round($(collected[prefix]).filter(lim[prefix]).toArray().length*100/lim[prefix].length)})
 
         if(i<20){
             group[Math.floor((i)/4)]+=collected[prefix].length;
@@ -359,8 +373,8 @@ function addDropDown(){
             <option value='Default' index='0'>預設排序</option>\
             <option value='Star4' index='1'>4星數</option>\
             <option value='Percentage' index='2'>百分比</option>\
-            <!--option value='Lim' index='3'>真限定數</option>\
-            <option value='LimP' index='4'>真限定百分比</option--></select\
+            <option value='Lim' index='3'>真限定數</option>\
+            <option value='LimP' index='4'>真限定百分比</option></select\
           ><!--select id='attr'>\
             <option value='all' index='0'>全部屬性</option>\
             <option value='green' index='1'>綠草🌱</option>\
