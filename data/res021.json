@@ -1,24 +1,68 @@
 {
-"no008" : {"group": "mmj"},
-"no009" : {"group": "25"},
-"no010" : {"group": "ws"},
-"no011" : {"group": "ws"},
-"no012" : {"group": "vbs"},
-"no013" : {"group": "ln"},
-"no016" : {"group": "na"},
-"no017" : {"group": "vbs"},
-"no018" : {"group": "25"},
-"no022" : {"group": "mmj"},
-"no023" : {"group": "25"},
-"no028" : {"group": "na"},
-"no030" : {"group": "ln"},
-"no033" : {"group": "ln"},
-"no034" : {"group": "mmj"},
-"no037" : {"group": "ws"},
-"no045" : {"group": "na"},
-"no046" : {"group": "mmj"},
-"no047" : {"group": "vbs"},
-"no048" : {"group": "na"},
-"no050" : {"group": "mmj"},
-"no052" : {"group": "na"}
+ "no008": {
+  "group": "mmj"
+ },
+ "no009": {
+  "group": "25"
+ },
+ "no010": {
+  "group": "ws"
+ },
+ "no011": {
+  "group": "ws"
+ },
+ "no012": {
+  "group": "vbs"
+ },
+ "no013": {
+  "group": "ln"
+ },
+ "no016": {
+  "group": "na"
+ },
+ "no017": {
+  "group": "vbs"
+ },
+ "no018": {
+  "group": "25"
+ },
+ "no022": {
+  "group": "mmj"
+ },
+ "no023": {
+  "group": "25"
+ },
+ "no028": {
+  "group": "na"
+ },
+ "no030": {
+  "group": "ln"
+ },
+ "no033": {
+  "group": "ln"
+ },
+ "no034": {
+  "group": "mmj"
+ },
+ "no037": {
+  "group": "ws"
+ },
+ "no045": {
+  "group": "na"
+ },
+ "no046": {
+  "group": "mmj"
+ },
+ "no047": {
+  "group": "vbs"
+ },
+ "no048": {
+  "group": "na"
+ },
+ "no050": {
+  "group": "mmj"
+ },
+ "no052": {
+  "group": "na"
+ }
 }
