@@ -10,3 +10,4 @@ src
 data/data.json
 data/allCards.json
 __pycache__
+attr
