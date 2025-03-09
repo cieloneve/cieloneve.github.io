@@ -6,3 +6,6 @@ data/cards.json
 checkData.py
 events.py
 data/eventCards.json
+src
+data/data.json
+data/allCards.json
