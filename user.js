@@ -33,7 +33,7 @@ var displayFlag = [
     {"flag":0,"title":"近藤騙錢爛限定","data":[]},
     {"flag":0,"title":"假四星","data":[]},
 ]; //0:lim 1:fes 2:bf 3:fakelim 4:fake
-var ranking = []
+var ranking = [], attr_list;
 
 const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json",
@@ -49,12 +49,13 @@ const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/fakelim.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/user/record.json",
+    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/attr.json",
     'https://sheets.googleapis.com/v4/spreadsheets/1mUR2MkKO8fVWAGrwKsqTauvhPHX9Zy_9ELt7PW-QB6U/values/record?alt=json&key=AIzaSyBSdX63RDDUrBRO5jZ1EHd7VtbbwITMT1c'
 ];
 
 Promise.all(urls.map(url => fetch(url).then(response => response.json())))
     .then(data => {
-        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record, userData] = data;
+        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record,attr_list , userData] = data;
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -118,12 +119,17 @@ $('.gallery').on("mouseleave","img" ,function(){
 $(".stats").on("change","select",function(){
     if($(this).attr('id')=="sorting"){
         mode = parseInt($('#sorting option:selected').attr('index'),10)
+        putOnChara()
     }
     else{
         attr = parseInt($('#attr option:selected').attr('index'),10)
         console.log(attr)
+        stat()
+        putOnChara()
+        appendAllSpecialCards()
     }
-    putOnChara()
+    
+    
 })
 
 $("#total").click(function(){
@@ -334,22 +340,24 @@ function stat(){
         }
 
         prefix="res"+$(this).attr("index")
-        $.merge(displayFlag[0]["data"], $(collected[prefix]).filter(lim[prefix]).toArray().map( e => prefix+"/"+e))
-        $.merge(displayFlag[1]["data"], $(collected[prefix]).filter(fes[prefix]).toArray().map( e => prefix+"/"+e))
-        $.merge(displayFlag[2]["data"], $(collected[prefix]).filter(bf[prefix]).toArray().map( e => prefix+"/"+e))
-        $.merge(displayFlag[3]["data"], $(collected[prefix]).filter(flim[prefix]).toArray().map( e => prefix+"/"+e))        
-        $.merge(displayFlag[4]["data"], $(collected[prefix]).filter(fake[prefix]).toArray().map( e => prefix+"/"+e))         
+        cards = $(collected[prefix]).filter(attr_list[attr][prefix]).toArray()
         
-        star4+=collected[prefix].length;
+        $.merge(displayFlag[0]["data"], $(cards).filter(lim[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[1]["data"], $(cards).filter(fes[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[2]["data"], $(cards).filter(bf[prefix]).toArray().map( e => prefix+"/"+e))
+        $.merge(displayFlag[3]["data"], $(cards).filter(flim[prefix]).toArray().map( e => prefix+"/"+e))        
+        $.merge(displayFlag[4]["data"], $(cards).filter(fake[prefix]).toArray().map( e => prefix+"/"+e))         
+        
+        star4+=cards.length;
 
-        ranking.push({"name":$(this).text(),"number":collected[prefix].length,"ratio":Math.round(collected[prefix].length*100/file[prefix].length),"lim":$(collected[prefix]).filter(lim[prefix]).toArray().length,'lim_ratio':Math.round($(collected[prefix]).filter(lim[prefix]).toArray().length*100/lim[prefix].length)})
+        ranking.push({"name":$(this).text(),"number":cards.length,"ratio":Math.round(cards.length*100/file[prefix].length),"lim":$(cards).filter(lim[prefix]).toArray().length,'lim_ratio':Math.round($(cards).filter(lim[prefix]).toArray().length*100/lim[prefix].length)})
 
         if(i<20){
-            group[Math.floor((i)/4)]+=collected[prefix].length;
+            group[Math.floor((i)/4)]+=cards.length;
         }
         else{
             //console.log(tempRes[i-20])
-            collected["res0"+String(i+1)].forEach(function (item) {
+            cards.forEach(function (item) {
                 if(tempRes[i-20][item]["group"]=="ln")groupV[0]++;
                 else if(tempRes[i-20][item]["group"]=="mmj")groupV[1]++;
                 else if(tempRes[i-20][item]["group"]=="vbs")groupV[2]++;
@@ -375,7 +383,7 @@ function addDropDown(){
             <option value='Percentage' index='2'>百分比</option>\
             <option value='Lim' index='3'>真限定數</option>\
             <option value='LimP' index='4'>真限定百分比</option></select\
-          ><!--select id='attr'>\
+          ><select id='attr'>\
             <option value='all' index='0'>全部屬性</option>\
             <option value='green' index='1'>綠草🌱</option>\
             <option value='david' index='2'>藍星✡️</option>\
@@ -383,7 +391,7 @@ function addDropDown(){
             <option value='moon' index='4'>紫月🌙</option>\
             <option value='heart' index='5'>橘心🩷</option>\
           </select>\
-        </div -->")
+        </div>")
     $('#sorting').children().each(function(){
         if(parseInt($(this).attr('index'),10)==mode){
             $(this).attr("selected", true);
