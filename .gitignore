@@ -9,3 +9,4 @@ data/eventCards.json
 src
 data/data.json
 data/allCards.json
+__pycache__
