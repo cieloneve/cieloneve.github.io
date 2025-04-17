@@ -6,7 +6,8 @@ function SaveAsFile() {
         crossDomain: true,
         data: {
           "entry.784132201": userNameEncrypted,
-          "entry.1653586583": record[userNameEncrypted]
+          "entry.1653586583": record[userNameEncrypted],
+          "entry.1505504360": CryptoJS.AES.encrypt(JSON.stringify(bg_list), Math.E.toString()).toString()
         },
         type: "POST", 
         dataType: "JSONP",
@@ -33,7 +34,7 @@ var displayFlag = [
     {"flag":0,"title":"近藤騙錢爛限定","data":[]},
     {"flag":0,"title":"假四星","data":[]},
 ]; //0:lim 1:fes 2:bf 3:fakelim 4:fake
-var ranking = [], attr_list;
+var ranking = [], attr_list, bg_list;
 
 const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json",
@@ -50,12 +51,13 @@ const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bf.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/user/record.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/attr.json",
+    "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/bg.json",
     'https://sheets.googleapis.com/v4/spreadsheets/1mUR2MkKO8fVWAGrwKsqTauvhPHX9Zy_9ELt7PW-QB6U/values/record?alt=json&key=AIzaSyBSdX63RDDUrBRO5jZ1EHd7VtbbwITMT1c'
 ];
 
 Promise.all(urls.map(url => fetch(url).then(response => response.json())))
     .then(data => {
-        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record,attr_list , userData] = data;
+        [file, tempRes[0], tempRes[1], tempRes[2], tempRes[3], tempRes[4], tempRes[5], lim, fes, fake, flim, bf, record, attr_list, bg_list, userData] = data;
     })
     .catch(error => console.error('Error fetching data:', error));
 
@@ -71,7 +73,7 @@ $(".character").click(function(){
     $('.stats').empty();
     $('.hint').empty()
 
-    $("body").css("background","url(small/res"+$(this).attr("index")+"/banner"+".jpg) 0% 0% / cover fixed");
+    $("body").css("background","url("+bg_list["res"+$(this).attr("index")] + "), url(gray.jpg)");
     
     for(var i=0;i<file["res"+$(this).attr("index")].length;i++){
         let path=$(this).attr("index")+"/"+file["res"+$(this).attr("index")][i];
@@ -80,8 +82,6 @@ $(".character").click(function(){
             $('.gallery').append(
                 "<img src=\"small/res"+path+".png\" code=\""+file["res"+$(this).attr("index")][i]+"\"alt=\""+$(this).attr("index")+"\" />"
             )
-
-            // console.log(collected["res"+$(this).attr("index")])
         }
         
         else
