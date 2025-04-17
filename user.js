@@ -90,24 +90,12 @@ $(".character").click(function(){
     }
 });
 //img action----------------------------------------------------------------------------------------------------
-$('.gallery').on('mousedown',"img",function(e){
-    if(e.which==3){
-        if($(this).attr("class")=="collected"){
-            $(this).attr("class","")
-            collected["res"+$(this).attr("alt")].splice(collected["res"+$(this).attr("alt")].indexOf($(this).attr("code")),1)
-            console.log(collected["res"+$(this).attr("alt")])
-        }
-    }
-});
 $(".gallery").on("click","img",function(){
     if($(this).attr("class")!="collected"){
         $(this).attr("class","collected")
         collected["res"+$(this).attr("alt")].push($(this).attr("code"))
     }
 })
-$('.gallery').on("contextmenu","img" ,function(){
-    return false;
-});
 $('.gallery').on("mouseenter","img" ,function(){
     $(this).attr("src","small/res"+$(this).attr("alt")+"/"+$(this).attr("code")+"_normal.png")
 });
@@ -403,3 +391,48 @@ function addDropDown(){
         }
     })
 }
+$(function() {
+    $.contextMenu({
+        selector: '.gallery img',
+        items: {
+            "uncollect": {name: "移除收藏", icon: "delete", callback:function(key, opt){    
+                
+                if($(this).attr("class").indexOf("collected")!=-1){
+                    $(this).attr("class","")
+                    collected["res"+$(this).attr("alt")].splice(collected["res"+$(this).attr("alt")].indexOf($(this).attr("code")),1)
+                    console.log(collected["res"+$(this).attr("alt")])
+                }  
+            }},
+            "after": {name: "設為背景圖片(花前)", icon: "edit",callback: function(key, opt){
+                bg_list["res"+$(this).attr("alt")] = "bg/res" + $(this).attr("alt") + "/" + $(this).attr("code") + "_normal.webp"
+                
+                $("body").css("background","url("+bg_list["res"+$(this).attr("alt")] + "), url(gray.jpg)");
+            }},
+            "normal": {name: "設為背景圖片(花後)", icon: "edit",callback: function(key, opt){
+                bg_list["res"+$(this).attr("alt")] = "bg/res" + $(this).attr("alt") + "/" + $(this).attr("code") + ".webp"
+                
+                $("body").css("background","url("+bg_list["res"+$(this).attr("alt")] + "), url(gray.jpg)");
+            }},
+            "sep1": "---------",
+            "quit": {name: "取消", icon: "quit", callback: function(key, opt){
+                console.log($(this))
+            }}
+        }
+    });
+    $.contextMenu({
+        selector: '*',
+        items: {
+            "disappear": {name:"隱藏收藏", icon:"cut", callback:function(k,o){
+                $('.gallery').css("display","none")
+
+            }},
+            "appear": {name:"顯示收藏", icon:"loading", callback:function(k,o){
+                $(".gallery").css("display","flex")
+            }},
+            "sep1": "---------",
+            "quit": {name: "取消", icon: "quit", callback: function(key, opt){
+                console.log($(this))
+            }}
+        }
+    });
+});
