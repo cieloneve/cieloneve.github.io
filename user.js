@@ -1,12 +1,11 @@
 function SaveAsFile() {
-    record[userNameEncrypted] = CryptoJS.AES.encrypt(JSON.stringify(collected), Math.E.toString()).toString();
     $.ajax({
         
         url: "https://docs.google.com/forms/u/0/d/e/1FAIpQLScQSz-APwiTTyfzr63kHGc56nBaG-X25G9MLPkT9NZv3vl7_A/formResponse",
         crossDomain: true,
         data: {
           "entry.784132201": userNameEncrypted,
-          "entry.1653586583": record[userNameEncrypted],
+          "entry.1653586583": CryptoJS.AES.encrypt(JSON.stringify(collected), Math.E.toString()).toString(),
           "entry.1505504360": CryptoJS.AES.encrypt(JSON.stringify(bg_list), Math.E.toString()).toString()
         },
         type: "POST", 
@@ -242,7 +241,8 @@ function isExisted(e, index, array) {
     if (CryptoJS.AES.decrypt(e, Math.E.toString()).toString(CryptoJS.enc.Utf8)==userName){
         console.log(CryptoJS.AES.decrypt(e, Math.E.toString()).toString(CryptoJS.enc.Utf8))
         userNameEncrypted = e;
-        collected = JSON.parse(CryptoJS.AES.decrypt(record[e], Math.E.toString()).toString(CryptoJS.enc.Utf8));
+        collected = JSON.parse(CryptoJS.AES.decrypt(record[e][0], Math.E.toString()).toString(CryptoJS.enc.Utf8));
+        bg_list = JSON.parse(CryptoJS.AES.decrypt(record[e][1], Math.E.toString()).toString(CryptoJS.enc.Utf8));
         return true;
     }
     
@@ -255,7 +255,7 @@ function isExisted(e, index, array) {
 function initRecord(){
     array_temp = userData["values"]
     array_temp.forEach(function (item) {
-        record[item[1]] = item[2];
+        record[item[1]] = [item[2], item[3]];
     });
 }
 function putOnChara(){
