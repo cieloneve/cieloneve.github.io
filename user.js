@@ -221,7 +221,7 @@ $(".btn1").click(function(i,v){
             $('.gallery').append(" <input type='file' id='filein' accept='application/JSON' onchange='loaddata();'/>")
             $('.hint').append("使用說明：點選上方角色名稱開始，左鍵選擇，右鍵取消，存檔會存在雲端，下載會存在本機")
         }
-        
+        localStorage.setItem("NeveUserName",userName);
     }
 })
 

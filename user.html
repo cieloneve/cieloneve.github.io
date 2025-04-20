@@ -101,4 +101,8 @@
       <img class="modal-content" src="" />
     </div>
   </body>
+  <script>
+    name = localStorage.getItem("NeveUserName");
+    if (name != "null") $("input[type=text][name=inputField]").val(name);
+  </script>
 </html>
