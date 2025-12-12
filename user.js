@@ -35,6 +35,7 @@ var displayFlag = [
 ]; //0:lim 1:fes 2:bf 3:fakelim 4:fake
 var ranking = [], attr_list, bg_list;
 
+const sepBlock = "<div class = 'aaa'></div>"
 const urls = [
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/a.json",
     "https://raw.githubusercontent.com/cieloneve/cieloneve.github.io/main/data/res021.json",
@@ -173,12 +174,12 @@ function openfile(url, callback) {
 }
 
 function appendGallerySection(e) {
-    $('.gallery').append("<div class='aaa'></div>");
+    $('.gallery').append(sepBlock);
     if(e["flag"])
         $('.gallery').append("<label class = 'specialCard'><input type='checkedbox' id='check' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
     else
         $('.gallery').append("<label class = 'specialCard'><input type='checkbox' id='check' name='"+e["title"]+"'><span>" + e["title"] + "</span></label>");
-    $('.gallery').append("<div class='aaa'></div>");
+    $('.gallery').append(sepBlock);
     if(e["flag"]){
         for (var i = 0; i < e["data"].length; i++) {
             $('.gallery').append(
@@ -253,35 +254,35 @@ function putOnChara(){
     switch (mode) {
         case 0:
             for (let i = 0; i < 26; i++) {
-                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                if(i%4==0&&i!=24)$('.stats').append(sepBlock,)
                 $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
             }
             break;
         case 1:
             temp.sort((a,b)=>(b.number - a.number))
             for (let i = 0; i < 26; i++) {
-                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                if(i%4==0&&i!=24)$('.stats').append(sepBlock,)
                 $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].number.toString())
             }
             break;
         case 2:
             temp.sort((a,b)=>(b.ratio - a.ratio))
             for (let i = 0; i < 26; i++) {
-                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                if(i%4==0&&i!=24)$('.stats').append(sepBlock,)
                     $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].ratio.toString()+"%("+temp[i].number.toString()+")")
             }
             break;
         case 3:
             temp.sort((a,b)=>(b.lim - a.lim))
             for (let i = 0; i < 26; i++) {
-                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                if(i%4==0&&i!=24)$('.stats').append(sepBlock,)
                 $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].lim.toString())
             }
             break;
         case 4:
             temp.sort((a,b)=>(b.lim_ratio - a.lim_ratio))
             for (let i = 0; i < 26; i++) {
-                if(i%4==0&&i!=24)$('.stats').append("<div class=aaa>",)
+                if(i%4==0&&i!=24)$('.stats').append(sepBlock,)
                     $('.stats').append("<p\>"+temp[i].name+" : "+temp[i].lim_ratio.toString()+"%("+temp[i].lim.toString()+")")
             }
             break;    
@@ -289,15 +290,15 @@ function putOnChara(){
             break;
     }
 //group------------------------------------------------------------------------------------------------------------------------------  
-    $('.stats').append("<div class=aaa>",)
+    $('.stats').append(sepBlock,)
     $('.stats').append("<p\>加號左邊為原創角，右邊為V家")
-    $('.stats').append("<div class=aaa>",)
+    $('.stats').append(sepBlock,)
     for(tempi=0;tempi<5;tempi++){
         $('.stats').append("<p\>"+groupT[tempi]+" : "+group[tempi]+" + "+groupV[tempi])
     }
     $('.stats').append("<p\>"+groupT[5]+" : "+groupV[5])
 //total-----------------------------------------------------------------------------------------------------------------------------
-    $('.stats').append("<div class=aaa>",)
+    $('.stats').append(sepBlock,)
     $('.stats').append("<p\>總共 : "+String(star4-groupV[6])+" + "+groupV[6]+" = "+star4)
 }
 function stat(){
@@ -415,7 +416,8 @@ $(function() {
             }},
             "sep1": "---------",
             "quit": {name: "取消", icon: "quit", callback: function(key, opt){
-                console.log($(this))
+                // console.log($(this))
+                console.log("quit")
             }}
         }
     });
@@ -431,7 +433,8 @@ $(function() {
             }},
             "sep1": "---------",
             "quit": {name: "取消", icon: "quit", callback: function(key, opt){
-                console.log($(this))
+                // console.log($(this))
+                console.log("quit")
             }}
         }
     });

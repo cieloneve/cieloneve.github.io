@@ -11,3 +11,5 @@ data/data.json
 data/allCards.json
 __pycache__
 attr
+user_test.js
+style_test.css
