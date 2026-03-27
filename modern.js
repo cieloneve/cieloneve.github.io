@@ -2,8 +2,20 @@
 // 這個檔案是原始 user.js 的現代化 UI 適配版本
 // 所有核心邏輯保持不變，只修改 UI 相關的 DOM 操作
 
+// ===== 新增：訪客模式變數 =====
+var isGuestMode = false;
+
 // ===== 原始函數 - 保持不變 =====
 function SaveAsFile() {
+    // 訪客模式只保存到本地
+    if (isGuestMode) {
+        localStorage.setItem("NeveGuestData", JSON.stringify(collected));
+        localStorage.setItem("NeveGuestBg", JSON.stringify(bg_list));
+        alert("已保存到本機（訪客模式）");
+        return;
+    }
+    
+    // 正常模式保存到雲端
     $.ajax({
         url: "https://docs.google.com/forms/u/0/d/e/1FAIpQLScQSz-APwiTTyfzr63kHGc56nBaG-X25G9MLPkT9NZv3vl7_A/formResponse",
         crossDomain: true,
@@ -92,12 +104,14 @@ $("#loginBtn").click(function(){
         return
     }
     
+    isGuestMode = false;
     initRecord()
     if(Object.keys(record).some(isExisted)){
         // 有存檔，直接進入
         $("#loginSection").hide();
         $("#appSection").show();
-        $("#userNameDisplay").text(userName);
+        $("#userNameDisplay").text(userName).show();
+        $("#guestBadge").hide();
         showWelcomeMessage();
     } else {
         // 無存檔，詢問是否要開始新存檔或載入檔案
@@ -105,17 +119,67 @@ $("#loginBtn").click(function(){
             userNameEncrypted = CryptoJS.AES.encrypt(userName, Math.E.toString()).toString();
             $("#loginSection").hide();
             $("#appSection").show();
-            $("#userNameDisplay").text(userName);
+            $("#userNameDisplay").text(userName).show();
+            $("#guestBadge").hide();
             showWelcomeMessage();
         } else {
             // 顯示檔案輸入
             $("#gallery").html('<input type="file" id="filein" accept="application/JSON" onchange="loaddata();" style="margin: 2rem auto; display: block;"/>');
             $("#loginSection").hide();
             $("#appSection").show();
-            $("#userNameDisplay").text(userName);
+            $("#userNameDisplay").text(userName).show();
+            $("#guestBadge").hide();
         }
     }
     localStorage.setItem("NeveUserName", userName);
+});
+
+// 訪客模式按鈕
+$("#guestBtn").click(function(){
+    isGuestMode = true;
+    userName = "訪客";
+    
+    // 嘗試從本地載入訪客數據
+    const savedData = localStorage.getItem("NeveGuestData");
+    const savedBg = localStorage.getItem("NeveGuestBg");
+    
+    if (savedData) {
+        try {
+            collected = JSON.parse(savedData);
+            console.log("載入訪客本機存檔");
+        } catch(e) {
+            console.log("訪客存檔解析失敗，使用空白存檔");
+        }
+    }
+    
+    if (savedBg) {
+        try {
+            bg_list = JSON.parse(savedBg);
+            console.log("載入訪客背景設定");
+        } catch(e) {
+            console.log("訪客背景設定解析失敗");
+        }
+    }
+    
+    $("#loginSection").hide();
+    $("#appSection").show();
+    $("#userNameDisplay").hide();
+    $("#guestBadge").show();
+    showWelcomeMessage();
+    
+    // 更新提示訊息
+    setTimeout(function() {
+        $("#hintSection").html(`
+            <p style="color: #ff9a9e; font-weight: 600;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="vertical-align: middle; margin-right: 5px;">
+                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                    <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
+                </svg>
+                訪客模式：您的數據僅保存在本機瀏覽器中，不會上傳到雲端
+            </p>
+        `);
+    }, 100);
 });
 
 // 顯示歡迎訊息

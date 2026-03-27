@@ -187,6 +187,59 @@ body {
   transform: translateY(0);
 }
 
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.divider span {
+  padding: 0 1rem;
+}
+
+.btn-guest {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-family: 'Noto Sans TC', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-guest:hover {
+  border-color: var(--text-secondary);
+  background: var(--bg-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-guest:active {
+  transform: translateY(0);
+}
+
+.btn-guest svg {
+  stroke: currentColor;
+}
+
 .features-info {
   display: grid;
   gap: 1rem;
@@ -253,6 +306,24 @@ body {
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
+}
+
+.guest-badge {
+  padding: 0.375rem 0.875rem;
+  background: linear-gradient(135deg, #ffd89b, #ff9a9e);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.guest-badge svg {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .header-actions {
@@ -358,11 +429,14 @@ body {
 
 /* ===== Stats Panel ===== */
 .stats-panel {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(135%);
+  -webkit-backdrop-filter: blur(2px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -370,13 +444,15 @@ body {
 
 .stats-panel p {
   padding: 0.75rem 1.25rem;
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 10px;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
-  border: 2px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   transition: all var(--transition-fast);
 }
 
@@ -424,10 +500,13 @@ body {
 
 /* ===== Gallery ===== */
 .modern-gallery {
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(135%);
+  -webkit-backdrop-filter: blur(2px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   min-height: 400px;
   display: flex;
   flex-wrap: wrap;
@@ -497,8 +576,10 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  background: var(--bg-primary);
-  border: 2px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   cursor: pointer;
   transition: all var(--transition-normal);
@@ -564,13 +645,15 @@ body {
 }
 
 .tips {
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 1.5rem;
   text-align: left;
   max-width: 600px;
   margin: 0 auto;
-  border: 2px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .tips p {
@@ -605,9 +688,12 @@ body {
 .hint-section {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(135%);
+  -webkit-backdrop-filter: blur(2px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 16px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   text-align: center;
   color: var(--text-secondary);
   font-size: 0.875rem;
@@ -794,6 +880,8 @@ body.custom-bg .app-container {
 }
 
 body.custom-bg .modern-main > * {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2px) saturate(135%);
+  -webkit-backdrop-filter: blur(2px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }

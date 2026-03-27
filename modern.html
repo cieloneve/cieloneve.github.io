@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project SEKAI 卡面收集器 - 現代版</title>
+    <title>プロセカ卡面收集器</title>
     <link rel="stylesheet" type="text/css" href="modern.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
@@ -26,8 +26,8 @@
     <div class="login-container" id="loginSection">
       <div class="login-card">
         <div class="logo-section">
-          <h1 class="app-title">Project SEKAI</h1>
-          <p class="app-subtitle">卡面收集器</p>
+          <h1 class="app-title"></h1>
+          <p class="app-subtitle">卡面圖鑑</p>
         </div>
         <div class="login-form">
           <label for="inputField" class="input-label">輸入您的帳號</label>
@@ -40,7 +40,29 @@
             pattern="[A-Za-z0-9]+"
             title="只能輸入大小寫英文和數字的組合"
           />
-          <button class="btn-primary" type="submit" id="loginBtn">開始使用</button>
+          <button class="btn-primary" type="submit" id="loginBtn">
+            開始使用
+          </button>
+          <div class="divider">
+            <span>或</span>
+          </div>
+          <button class="btn-guest" type="button" id="guestBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <circle cx="12" cy="7" r="4" stroke-width="2" />
+            </svg>
+            訪客模式
+          </button>
         </div>
         <div class="features-info">
           <div class="feature-item">
@@ -65,29 +87,103 @@
       <header class="modern-header">
         <div class="header-content">
           <div class="header-left">
-            <h2 class="header-title">卡面收集器</h2>
+            <h2 class="header-title">卡面圖鑑</h2>
             <span class="user-badge" id="userNameDisplay"></span>
+            <span class="guest-badge" id="guestBadge" style="display: none">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+                  stroke-width="2"
+                />
+                <circle cx="12" cy="7" r="4" stroke-width="2" />
+              </svg>
+              訪客模式
+            </span>
           </div>
           <div class="header-actions">
+            <a
+              href="https://cieloneve.github.io/user"
+              target="_blank"
+              class="btn-icon"
+              title="舊版"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <polyline
+                  points="15 3 21 3 21 9"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="10"
+                  y1="14"
+                  x2="21"
+                  y2="3"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span>舊版</span>
+            </a>
             <button class="btn-icon" id="saveBtn" title="存檔">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke-width="2"/>
-                <polyline points="17 21 17 13 7 13 7 21" stroke-width="2"/>
-                <polyline points="7 3 7 8 15 8" stroke-width="2"/>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+                  stroke-width="2"
+                />
+                <polyline points="17 21 17 13 7 13 7 21" stroke-width="2" />
+                <polyline points="7 3 7 8 15 8" stroke-width="2" />
               </svg>
               <span>存檔</span>
             </button>
             <button class="btn-icon" id="downloadBtn" title="下載">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-width="2"/>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"
+                  stroke-width="2"
+                />
               </svg>
               <span>下載</span>
             </button>
             <button class="btn-icon" id="totalBtn" title="統計">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <line x1="12" y1="20" x2="12" y2="10" stroke-width="2"/>
-                <line x1="18" y1="20" x2="18" y2="4" stroke-width="2"/>
-                <line x1="6" y1="20" x2="6" y2="16" stroke-width="2"/>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <line x1="12" y1="20" x2="12" y2="10" stroke-width="2" />
+                <line x1="18" y1="20" x2="18" y2="4" stroke-width="2" />
+                <line x1="6" y1="20" x2="6" y2="16" stroke-width="2" />
               </svg>
               <span>統計</span>
             </button>
