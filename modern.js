@@ -546,9 +546,13 @@ $(function() {
         items: {
             "disappear": {name:"隱藏收藏", icon:"cut", callback:function(k,o){
                 $('#gallery').css("display","none")
+                $('#statsPanel').css("display","none")
+                $('#hintSection').css("display","none")
             }},
             "appear": {name:"顯示收藏", icon:"loading", callback:function(k,o){
                 $("#gallery").css("display","flex")
+                $('#statsPanel').css("display","flex")
+                $('#hintSection').css("display","flex")
             }},
             "sep1": "---------",
             "quit": {name: "取消", icon: "quit", callback: function(key, opt){
