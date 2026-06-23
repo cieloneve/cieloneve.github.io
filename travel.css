@@ -101,7 +101,14 @@ a:hover {
   justify-content: center;
   margin-top: 12px;
 }
+.filter-bar.sub {
+  opacity: 0.85;
+  margin-top: 6px;
+}
 
+.filter-bar.sub .chip {
+  background: #1f2740;
+}
 .chip {
   padding: 6px 10px;
   border-radius: 999px;

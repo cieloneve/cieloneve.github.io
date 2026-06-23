@@ -7,7 +7,10 @@ const loadUrlBtn = document.getElementById("loadUrlBtn");
 // ===== STATE（重點：不要放 function 裡）=====
 let rawData = [];
 let activeRegion = "all";
+let activeMain = "all";   // ⭐ 新增
+let activeSub = "all";    // ⭐ 新增
 let activeType = "all";
+let locationTree;
 
 // ===== EVENTS =====
 loadUrlBtn.addEventListener("click", loadFromUrl);
@@ -41,7 +44,13 @@ async function loadFromUrl() {
     rawData = parseCSV(text);
 
     const filters = extractFilters(rawData);
+    
+    
+    locationTree = filters.regions;
+
     renderFilters(filters);
+    renderSubFilters([]);
+
     applyFilter();
 
     status.textContent = `完成載入 ${rawData.length} 筆`;
@@ -68,18 +77,58 @@ function parseCSV(text) {
     });
 }
 
+function parseArea(areaStr) {
+  if (!areaStr) return { main: "待確認", sub: [] };
+
+  if (!areaStr.includes("：")) {
+    return { main: areaStr.trim(), sub: [] };
+  }
+
+  const [main, sub] = areaStr.split("：");
+
+  return {
+    main: main.trim(),
+    sub: sub
+      ? sub.split("・").map(s => s.trim()).filter(Boolean)
+      : []
+  };
+}
+
+function buildLocationTree(data) {
+  const tree = {};
+
+  data.forEach(item => {
+    const parsed = parseArea(item.area);
+
+    if (!tree[parsed.main]) {
+      tree[parsed.main] = new Set();
+    }
+
+    parsed.sub.forEach(s => tree[parsed.main].add(s));
+  });
+
+  return tree;
+}
+
 // ===== FILTER EXTRACT =====
 function extractFilters(data) {
-  const regions = new Set();
+  const regions = {};
   const types = new Set();
 
   data.forEach(item => {
-    if (item.area) regions.add(item.area.trim());
+    const parsed = parseArea(item.area);
+
+    if (!regions[parsed.main]) {
+      regions[parsed.main] = new Set();
+    }
+
+    parsed.sub.forEach(s => regions[parsed.main].add(s));
+
     if (item.type) types.add(item.type.trim());
   });
 
   return {
-    regions: [...regions],
+    regions,
     types: [...types]
   };
 }
@@ -97,34 +146,40 @@ function renderFilters(filters) {
 
   bar.innerHTML = "";
 
-  // ALL button
+  // ===== ALL =====
   const all = document.createElement("div");
   all.className = "chip";
   all.textContent = "全部";
 
   all.onclick = () => {
-    activeRegion = "all";
+    activeMain = "all";
+    activeSub = "all";
     activeType = "all";
+
+    renderSubFilters([]);
     applyFilter();
   };
 
   bar.appendChild(all);
 
-  // REGION chips
-  filters.regions.forEach(r => {
+  // ===== MAIN (大阪/京都) =====
+  Object.keys(filters.regions).forEach(main => {
     const el = document.createElement("div");
     el.className = "chip";
-    el.textContent = r;
+    el.textContent = main;
 
     el.onclick = () => {
-      activeRegion = r;
+      activeMain = main;
+      activeSub = "all";
+
+      renderSubFilters([...filters.regions[main]]);
       applyFilter();
     };
 
     bar.appendChild(el);
   });
 
-  // TYPE chips (dynamic)
+  // ===== TYPE (保留你的動態) =====
   filters.types.forEach(t => {
     const el = document.createElement("div");
     el.className = "chip";
@@ -139,12 +194,56 @@ function renderFilters(filters) {
   });
 }
 
+function renderSubFilters(subList) {
+  let bar = document.getElementById("subFilterBar");
+
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "subFilterBar";
+    bar.className = "filter-bar sub";
+    document.querySelector(".header").appendChild(bar);
+  }
+
+  bar.innerHTML = "";
+
+  if (!subList.length) return;
+
+  const all = document.createElement("div");
+  all.className = "chip";
+  all.textContent = "全部";
+
+  all.onclick = () => {
+    activeSub = "all";
+    applyFilter();
+  };
+
+  bar.appendChild(all);
+
+  subList.forEach(sub => {
+    const el = document.createElement("div");
+    el.className = "chip";
+    el.textContent = sub;
+
+    el.onclick = () => {
+      activeSub = sub;
+      applyFilter();
+    };
+
+    bar.appendChild(el);
+  });
+}
 // ===== FILTER PIPELINE =====
 function applyFilter() {
   let data = rawData;
 
-  if (activeRegion !== "all") {
-    data = data.filter(i => i.area === activeRegion);
+  if (activeMain !== "all") {
+    data = data.filter(i => parseArea(i.area).main === activeMain);
+  }
+
+  if (activeSub !== "all") {
+    data = data.filter(i =>
+      parseArea(i.area).sub.includes(activeSub)
+    );
   }
 
   if (activeType !== "all") {
@@ -153,7 +252,6 @@ function applyFilter() {
 
   render(data);
 }
-
 // ===== RENDER =====
 function render(data) {
   container.innerHTML = "";
