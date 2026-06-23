@@ -4,6 +4,13 @@ const status = document.getElementById("status");
 const urlInput = document.getElementById("urlInput");
 const loadUrlBtn = document.getElementById("loadUrlBtn");
 
+const params = new URLSearchParams(location.search);
+const sheetUrl = params.get("sheet");
+
+if (sheetUrl) {
+  urlInput.value = sheetUrl;
+  loadFromUrl();
+}
 // ===== STATE（重點：不要放 function 裡）=====
 let rawData = [];
 let activeRegion = "all";
