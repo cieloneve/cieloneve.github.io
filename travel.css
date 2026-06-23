@@ -123,3 +123,44 @@ a:hover {
   transform: translateY(-1px);
   background: #3a4a77;
 }
+.like-pill {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 12px;
+
+  border: 1px solid rgba(255, 90, 120, 0.25);
+  background: rgba(255, 90, 120, 0.08);
+  color: #ff5a78;
+
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.like-pill:hover {
+  background: rgba(255, 90, 120, 0.15);
+  transform: translateY(-1px);
+}
+
+.like-pill:active {
+  transform: scale(0.98);
+}
+
+.like-pill.liked {
+  background: rgba(255, 90, 120, 0.22);
+  border-color: rgba(255, 90, 120, 0.6);
+}
+
+.like-count {
+  font-weight: 700;
+  min-width: 20px;
+  text-align: left;
+}

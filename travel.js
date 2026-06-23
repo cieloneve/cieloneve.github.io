@@ -18,6 +18,43 @@ let activeMain = "all";   // ⭐ 新增
 let activeSub = "all";    // ⭐ 新增
 let activeType = "all";
 let locationTree;
+let GAS_URL = null;
+let userId = getUserId();
+
+// ===== USERS =====
+
+function getUserId() {
+  let id = localStorage.getItem("travel_user_id");
+
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem("travel_user_id", id);
+  }
+
+  return id;
+}
+
+async function sendLike(link) {
+
+  if (!GAS_URL) {
+    alert("找不到 GAS_URL");
+    return null;
+  }
+
+  const res = await fetch(GAS_URL, {
+    redirect: "follow",
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      link,
+      user_id: userId
+    })
+  });
+
+  return await res.json();
+}
 
 // ===== EVENTS =====
 loadUrlBtn.addEventListener("click", loadFromUrl);
@@ -69,19 +106,50 @@ async function loadFromUrl() {
 
 // ===== CSV PARSER =====
 function parseCSV(text) {
-  return text
+
+  const data = [];
+
+  text
     .trim()
     .split("\n")
-    .map(line => {
+    .forEach(line => {
+
       const p = line.split(",");
-      return {
+
+      // ======================
+      // GAS CONFIG ROW
+      // ======================
+      if (
+        p[0] === "GAS_URL" &&
+        p[1] === "GAS_URL" &&
+        p[2] === "GAS_URL"
+      ) {
+        GAS_URL = p[3];
+        return;
+      }
+
+      data.push({
         name: p[0] || "",
         area: p[1] || "",
         type: p[2] || "",
         link: p[3] || "",
-        note: p[4] || ""
-      };
+        note: p[4] || "",
+        likes: Number(p[5] || 0),
+        likedBy: safeParse(p[6])
+      });
+
     });
+
+  return data;
+}
+
+function safeParse(v) {
+  try {
+    if (!v) return [];
+    return JSON.parse(v);
+  } catch {
+    return [];
+  }
 }
 
 function parseArea(areaStr) {
@@ -278,8 +346,41 @@ function render(data) {
       <div class="desc">${escapeHtml(item.note)}</div>
 
       ${item.link ? `<a href="${item.link}" target="_blank">開啟連結 →</a>` : ""}
-    `;
 
+      <button class="like-pill">
+        ❤️ <span class="like-count">${item.likes || 0}</span>
+      </button>
+    `;
+    const btn = card.querySelector(".like-pill");
+    const countEl = card.querySelector(".like-count");
+
+    if (btn) {
+
+      btn.addEventListener("click", async () => {
+
+      btn.disabled = true;
+
+      try {
+        const res = await sendLike(item.link);
+
+        if (res?.status === "ok") {
+          item.likes = res.count;
+          countEl.textContent = res.count;
+          btn.classList.add("liked");
+        }
+
+        if (res?.status === "already_liked") {
+          btn.classList.add("liked");
+        }
+
+      } catch (e) {
+        console.error(e);
+      }
+
+      btn.disabled = false;
+    });
+
+    }
     container.appendChild(card);
   });
 }
