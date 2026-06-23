@@ -93,3 +93,26 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #2a3555;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+  background: #3a4a77;
+}

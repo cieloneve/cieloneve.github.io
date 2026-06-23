@@ -1,37 +1,63 @@
-const fileInput = document.getElementById("fileInput");
 const container = document.getElementById("cardContainer");
 const status = document.getElementById("status");
 
-fileInput.addEventListener("change", handleFile);
+const urlInput = document.getElementById("urlInput");
+const loadUrlBtn = document.getElementById("loadUrlBtn");
 
-function handleFile(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+// ===== STATE（重點：不要放 function 裡）=====
+let rawData = [];
+let activeRegion = "all";
+let activeType = "all";
 
-  status.textContent = "讀取 CSV 中...";
+// ===== EVENTS =====
+loadUrlBtn.addEventListener("click", loadFromUrl);
 
-  const reader = new FileReader();
+// MARK: ===== LOAD DATA =====
+function normalizeGoogleSheetUrl(inputUrl) {
+  const match = inputUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
 
-  reader.onload = (event) => {
-    const text = event.target.result;
+  if (!match) return null;
 
-    const data = parseCSV(text);
+  const sheetId = match[1];
 
-    render(data);
-
-    status.textContent = `完成載入 ${data.length} 筆資料`;
-  };
-
-  reader.readAsText(file);
+  return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
 }
 
+async function loadFromUrl() {
+  const rawUrl = urlInput.value.trim();
+  const url = normalizeGoogleSheetUrl(rawUrl) || rawUrl;
+
+  if (!url) {
+    status.textContent = "URL 無效";
+    return;
+  }
+
+  status.textContent = "載入中...";
+
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+
+    rawData = parseCSV(text);
+
+    const filters = extractFilters(rawData);
+    renderFilters(filters);
+    applyFilter();
+
+    status.textContent = `完成載入 ${rawData.length} 筆`;
+  } catch (e) {
+    console.error(e);
+    status.textContent = "載入失敗";
+  }
+}
+
+// ===== CSV PARSER =====
 function parseCSV(text) {
   return text
     .trim()
     .split("\n")
     .map(line => {
       const p = line.split(",");
-
       return {
         name: p[0] || "",
         area: p[1] || "",
@@ -42,35 +68,93 @@ function parseCSV(text) {
     });
 }
 
-const urlInput = document.getElementById("urlInput");
-const loadUrlBtn = document.getElementById("loadUrlBtn");
+// ===== FILTER EXTRACT =====
+function extractFilters(data) {
+  const regions = new Set();
+  const types = new Set();
 
-loadUrlBtn.addEventListener("click", loadFromUrl);
+  data.forEach(item => {
+    if (item.area) regions.add(item.area.trim());
+    if (item.type) types.add(item.type.trim());
+  });
 
-async function loadFromUrl() {
-  const url = urlInput.value.trim();
-  if (!url) return;
-
-  status.textContent = "載入網路 CSV 中...";
-
-  try {
-    const res = await fetch(url);
-
-    if (!res.ok) throw new Error("HTTP error " + res.status);
-
-    const text = await res.text();
-
-    const data = parseCSV(text);
-
-    render(data);
-
-    status.textContent = `完成載入 ${data.length} 筆（網路來源）`;
-  } catch (e) {
-    console.error(e);
-    status.textContent = "載入失敗（可能 CORS 或 URL 無效）";
-  }
+  return {
+    regions: [...regions],
+    types: [...types]
+  };
 }
 
+// ===== RENDER FILTER UI =====
+function renderFilters(filters) {
+  let bar = document.getElementById("filterBar");
+
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "filterBar";
+    bar.className = "filter-bar";
+    document.querySelector(".header").appendChild(bar);
+  }
+
+  bar.innerHTML = "";
+
+  // ALL button
+  const all = document.createElement("div");
+  all.className = "chip";
+  all.textContent = "全部";
+
+  all.onclick = () => {
+    activeRegion = "all";
+    activeType = "all";
+    applyFilter();
+  };
+
+  bar.appendChild(all);
+
+  // REGION chips
+  filters.regions.forEach(r => {
+    const el = document.createElement("div");
+    el.className = "chip";
+    el.textContent = r;
+
+    el.onclick = () => {
+      activeRegion = r;
+      applyFilter();
+    };
+
+    bar.appendChild(el);
+  });
+
+  // TYPE chips (dynamic)
+  filters.types.forEach(t => {
+    const el = document.createElement("div");
+    el.className = "chip";
+    el.textContent = t;
+
+    el.onclick = () => {
+      activeType = t;
+      applyFilter();
+    };
+
+    bar.appendChild(el);
+  });
+}
+
+// ===== FILTER PIPELINE =====
+function applyFilter() {
+  let data = rawData;
+
+  if (activeRegion !== "all") {
+    data = data.filter(i => i.area === activeRegion);
+  }
+
+  if (activeType !== "all") {
+    data = data.filter(i => i.type === activeType);
+  }
+
+  render(data);
+}
+
+// ===== RENDER =====
 function render(data) {
   container.innerHTML = "";
 
@@ -95,6 +179,7 @@ function render(data) {
   });
 }
 
+// ===== SECURITY =====
 function escapeHtml(str) {
   return (str || "")
     .replaceAll("&", "&amp;")
