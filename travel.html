@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>旅行卡片系統</title>
+  <link rel="stylesheet" href="travel.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>📍 旅行卡片系統</h1>
+  <div class="source-box">
+    <input id="urlInput" type="text" placeholder="輸入 CSV URL（CDN / GitHub raw）" />
+    <button id="loadUrlBtn">載入網址</button>
+  </div>
+
+  <!-- <div class="divider">或</div>
+  <p class="sub">選擇 CSV 檔案，即可轉換成卡片瀏覽</p>
+
+  <input type="file" id="fileInput" accept=".csv" /> -->
+  
+</header>
+
+<main>
+  <div id="status" class="status"></div>
+  <div id="cardContainer" class="grid"></div>
+</main>
+
+<script src="travel.js"></script>
+</body>
+</html>
