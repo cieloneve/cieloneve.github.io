@@ -105,40 +105,40 @@ async function loadFromUrl() {
 }
 
 // ===== CSV PARSER =====
+// ===== CSV PARSER =====
 function parseCSV(text) {
+
+  const result = Papa.parse(text.trim(), {
+    skipEmptyLines: true
+  });
 
   const data = [];
 
-  text
-    .trim()
-    .split("\n")
-    .forEach(line => {
+  result.data.forEach(p => {
 
-      const p = line.split(",");
+    // ======================
+    // GAS CONFIG ROW
+    // ======================
+    if (
+      p[0] === "GAS_URL" &&
+      p[1] === "GAS_URL" &&
+      p[2] === "GAS_URL"
+    ) {
+      GAS_URL = p[3];
+      return;
+    }
 
-      // ======================
-      // GAS CONFIG ROW
-      // ======================
-      if (
-        p[0] === "GAS_URL" &&
-        p[1] === "GAS_URL" &&
-        p[2] === "GAS_URL"
-      ) {
-        GAS_URL = p[3];
-        return;
-      }
-
-      data.push({
-        name: p[0] || "",
-        area: p[1] || "",
-        type: p[2] || "",
-        link: p[3] || "",
-        note: p[4] || "",
-        likes: Number(p[5] || 0),
-        likedBy: safeParse(p[6])
-      });
-
+    data.push({
+      name: p[0] || "",
+      area: p[1] || "",
+      type: p[2] || "",
+      link: p[3] || "",
+      note: p[4] || "",
+      likes: Number(p[5] || 0),
+      likedBy: safeParse(p[6])
     });
+
+  });
 
   return data;
 }
@@ -146,17 +146,6 @@ function parseCSV(text) {
 function safeParse(v) {
   try {
     if (!v) return [];
-
-    v = v.trim();
-
-    // 去掉最外層 CSV 引號
-    if (v.startsWith('"') && v.endsWith('"')) {
-      v = v.slice(1, -1);
-    }
-
-    // CSV 的 "" 還原成 JSON 的 "
-    v = v.replace(/""/g, '"');
-
     return JSON.parse(v);
   } catch {
     return [];
