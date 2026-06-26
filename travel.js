@@ -18,6 +18,43 @@ let activeMain = "all";   // ⭐ 新增
 let activeSub = "all";    // ⭐ 新增
 let activeType = "all";
 let locationTree;
+let GAS_URL = null;
+let userId = getUserId();
+
+// ===== USERS =====
+
+function getUserId() {
+  let id = localStorage.getItem("travel_user_id");
+
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem("travel_user_id", id);
+  }
+
+  return id;
+}
+
+async function sendLike(link) {
+
+  if (!GAS_URL) {
+    alert("找不到 GAS_URL");
+    return null;
+  }
+
+  const res = await fetch(GAS_URL, {
+    redirect: "follow",
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      link,
+      user_id: userId
+    })
+  });
+
+  return await res.json();
+}
 
 // ===== EVENTS =====
 loadUrlBtn.addEventListener("click", loadFromUrl);
@@ -69,19 +106,61 @@ async function loadFromUrl() {
 
 // ===== CSV PARSER =====
 function parseCSV(text) {
-  return text
+
+  const data = [];
+
+  text
     .trim()
     .split("\n")
-    .map(line => {
+    .forEach(line => {
+
       const p = line.split(",");
-      return {
+
+      // ======================
+      // GAS CONFIG ROW
+      // ======================
+      if (
+        p[0] === "GAS_URL" &&
+        p[1] === "GAS_URL" &&
+        p[2] === "GAS_URL"
+      ) {
+        GAS_URL = p[3];
+        return;
+      }
+
+      data.push({
         name: p[0] || "",
         area: p[1] || "",
         type: p[2] || "",
         link: p[3] || "",
-        note: p[4] || ""
-      };
+        note: p[4] || "",
+        likes: Number(p[5] || 0),
+        likedBy: safeParse(p[6])
+      });
+
     });
+
+  return data;
+}
+
+function safeParse(v) {
+  try {
+    if (!v) return [];
+
+    v = v.trim();
+
+    // 去掉最外層 CSV 引號
+    if (v.startsWith('"') && v.endsWith('"')) {
+      v = v.slice(1, -1);
+    }
+
+    // CSV 的 "" 還原成 JSON 的 "
+    v = v.replace(/""/g, '"');
+
+    return JSON.parse(v);
+  } catch {
+    return [];
+  }
 }
 
 function parseArea(areaStr) {
@@ -278,8 +357,54 @@ function render(data) {
       <div class="desc">${escapeHtml(item.note)}</div>
 
       ${item.link ? `<a href="${item.link}" target="_blank">開啟連結 →</a>` : ""}
-    `;
 
+      <button class="like-pill">
+        ❤️ <span class="like-count">${item.likes || 0}</span>
+      </button>
+    `;
+    const btn = card.querySelector(".like-pill");
+    const countEl = card.querySelector(".like-count");
+
+    if (btn) {
+
+      btn.addEventListener("click", async () => {
+
+        // ===== CLIENT CHECK =====
+        if (item.likedBy.includes(userId)) {
+          return;
+        }
+
+        // ===== OPTIMISTIC UPDATE =====
+
+        item.likes++;
+        item.likedBy.push(userId);
+
+        applyFilter();
+
+        try {
+
+          await sendLike(item.link);
+
+        } catch (err) {
+
+          console.error(err);
+
+          // ===== ROLLBACK =====
+
+          item.likes--;
+
+          item.likedBy = item.likedBy.filter(
+            id => id !== userId
+          );
+
+          applyFilter();
+
+          alert("按讚失敗");
+        }
+
+      });
+
+    }
     container.appendChild(card);
   });
 }
