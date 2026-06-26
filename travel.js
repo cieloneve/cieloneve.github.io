@@ -370,9 +370,6 @@ function render(data) {
       btn.addEventListener("click", async () => {
 
         // ===== CLIENT CHECK =====
-        console.log(item.likes)
-        console.log(item.likedBy)
-        console.log(userId)
         if (item.likedBy.includes(userId)) {
           return;
         }
