@@ -146,6 +146,17 @@ function parseCSV(text) {
 function safeParse(v) {
   try {
     if (!v) return [];
+
+    v = v.trim();
+
+    // 去掉最外層 CSV 引號
+    if (v.startsWith('"') && v.endsWith('"')) {
+      v = v.slice(1, -1);
+    }
+
+    // CSV 的 "" 還原成 JSON 的 "
+    v = v.replace(/""/g, '"');
+
     return JSON.parse(v);
   } catch {
     return [];
@@ -358,27 +369,43 @@ function render(data) {
 
       btn.addEventListener("click", async () => {
 
-      btn.disabled = true;
-
-      try {
-        const res = await sendLike(item.link);
-
-        if (res?.status === "ok") {
-          item.likes = res.count;
-          countEl.textContent = res.count;
-          btn.classList.add("liked");
+        // ===== CLIENT CHECK =====
+        console.log(item.likes)
+        console.log(item.likedBy)
+        console.log(userId)
+        if (item.likedBy.includes(userId)) {
+          return;
         }
 
-        if (res?.status === "already_liked") {
-          btn.classList.add("liked");
+        // ===== OPTIMISTIC UPDATE =====
+
+        item.likes++;
+        item.likedBy.push(userId);
+
+        applyFilter();
+
+        try {
+
+          await sendLike(item.link);
+
+        } catch (err) {
+
+          console.error(err);
+
+          // ===== ROLLBACK =====
+
+          item.likes--;
+
+          item.likedBy = item.likedBy.filter(
+            id => id !== userId
+          );
+
+          applyFilter();
+
+          alert("按讚失敗");
         }
 
-      } catch (e) {
-        console.error(e);
-      }
-
-      btn.disabled = false;
-    });
+      });
 
     }
     container.appendChild(card);
