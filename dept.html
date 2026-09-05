@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="以 Greedy 或 DFS 簡化多人之間的債務。">
+  <title>台幣債務簡化器</title>
+  <link rel="stylesheet" href="./deptcss/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <p class="eyebrow">Debt Simplifier</p>
+      <h1>台幣債務簡化器</h1>
+      <p>把多人債務整理成清楚、合法的最少或快速還款步驟。</p>
+    </div>
+  </header>
+
+  <main class="container app-shell">
+    <nav class="steps" aria-label="使用步驟">
+      <span data-step-indicator="1">1 人員</span>
+      <span data-step-indicator="2">2 姓名</span>
+      <span data-step-indicator="3">3 債務</span>
+      <span data-step-indicator="4">4 計算</span>
+    </nav>
+    <div id="global-message" class="message" role="alert" hidden></div>
+
+    <section class="panel" data-section="1">
+      <h2>設定人數</h2>
+      <p class="muted">請先設定參與結算的人數（2–50 人）。</p>
+      <form id="people-count-form" class="stack">
+        <label for="people-count">人數</label>
+        <input id="people-count" type="number" min="2" max="50" value="3" required>
+        <button class="primary" type="submit">建立人員</button>
+      </form>
+    </section>
+
+    <section class="panel" data-section="2" hidden>
+      <div class="section-heading">
+        <div><h2>設定人員名稱</h2><p class="muted">名稱需唯一且不可空白。</p></div>
+        <button class="link-button" type="button" data-back="1">返回</button>
+      </div>
+      <form id="people-form" class="stack">
+        <div id="people-fields" class="field-list"></div>
+        <button class="primary" type="submit">下一步：新增債務</button>
+      </form>
+    </section>
+
+    <section class="panel" data-section="3" hidden>
+      <div class="section-heading">
+        <div><h2>新增債務</h2><p class="muted">輸入「付款人欠收款人」的金額，支援到兩位小數。</p></div>
+        <button class="link-button" type="button" data-back="2">返回</button>
+      </div>
+      <form id="debt-form" class="debt-form">
+        <label for="debt-from">付款人</label>
+        <select id="debt-from" required></select>
+        <label for="debt-to">收款人</label>
+        <select id="debt-to" required></select>
+        <label for="debt-amount">金額（台幣）</label>
+        <input id="debt-amount" inputmode="decimal" placeholder="例如 100.50" required>
+        <button class="primary" type="submit">新增債務</button>
+      </form>
+      <div class="subpanel">
+        <h3>批次輸入</h3>
+        <p class="muted">每行格式：<code>付款人 收款人 金額</code>，例如 <code>A B 100.50</code>。</p>
+        <textarea id="batch-input" rows="4" placeholder="A B 100.50&#10;A C 50"></textarea>
+        <button id="batch-add" class="secondary" type="button">匯入批次債務</button>
+      </div>
+      <div class="subpanel">
+        <h3>均分費用</h3>
+        <p class="muted">選擇分攤成員，付款人必須為其中一位；系統會自動產生並附加債務。</p>
+        <div class="split-layout">
+          <label for="split-total">總金額</label>
+          <input id="split-total" type="text" inputmode="decimal" placeholder="例如 100.00">
+          <label for="split-payer">付款人</label>
+          <select id="split-payer"></select>
+          <fieldset class="participant-fieldset">
+            <legend>參與分攤的人員</legend>
+            <label class="check-label"><input id="split-select-all" type="checkbox"> 全選 / 取消全選</label>
+            <div id="split-participants" class="participant-list" aria-live="polite"></div>
+          </fieldset>
+        </div>
+        <div id="split-summary" class="split-summary" role="status" aria-live="polite" hidden></div>
+        <button id="split-generate" class="secondary" type="button">產生並附加債務</button>
+      </div>
+      <div class="subpanel random-tools">
+        <h3>測試資料</h3>
+        <div class="inline-fields">
+          <label>債務數 <input id="random-debt-count" type="number" min="1" max="200" value="5"></label>
+          <button id="random-data" class="secondary" type="button">隨機產生</button>
+        </div>
+      </div>
+      <div id="debt-list" class="debt-list" aria-live="polite"></div>
+      <button id="to-calculate" class="primary wide" type="button">下一步：選擇演算法</button>
+    </section>
+
+    <section class="panel" data-section="4" hidden>
+      <div class="section-heading">
+        <div><h2>選擇演算法並計算</h2><p class="muted">DFS 在背景執行緒搜尋最少交易；可隨時取消。</p></div>
+        <button class="link-button" type="button" data-back="3">返回</button>
+      </div>
+      <fieldset class="algorithm-choice">
+        <legend>演算法</legend>
+        <label><input type="radio" name="algorithm" value="greedy" checked> <strong>Greedy</strong><span>快速，不保證最少交易</span></label>
+        <label><input type="radio" name="algorithm" value="dfs"> <strong>DFS</strong><span>尋找保證最少交易，可能需要較久</span></label>
+      </fieldset>
+      <div class="settings-grid">
+        <label for="timeout-ms">DFS 時間上限（毫秒）
+          <input id="timeout-ms" type="number" min="1" max="5000" value="1000">
+        </label>
+        <label for="max-nodes">DFS 節點上限
+          <input id="max-nodes" type="number" min="1" max="1000000" value="1000000">
+        </label>
+      </div>
+      <label class="check-label"><input id="compare-algorithms" type="checkbox"> 同時比較 Greedy 與 DFS</label>
+      <div class="button-row">
+        <button id="calculate" class="primary" type="button">開始計算</button>
+        <button id="cancel" class="danger" type="button" hidden>取消計算</button>
+      </div>
+      <div id="progress" class="progress" role="status" aria-live="polite" hidden></div>
+      <div id="results" class="results" aria-live="polite"></div>
+    </section>
+  </main>
+  <script type="module" src="./deptjs/app.js"></script>
+</body>
+</html>
