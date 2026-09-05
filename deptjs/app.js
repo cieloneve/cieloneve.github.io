@@ -84,7 +84,7 @@ function runWorker(balances) {
   cancelled = false;
   return new Promise(resolve => {
     workerResolve = resolve;
-    currentWorker = new Worker("./js/worker.js", { type: "module" });
+    currentWorker = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
     state.worker = currentWorker;
     currentWorker.onmessage = event => {
       if (event.data.type === "progress") updateProgress(event.data.nodesVisited);
