@@ -124,6 +124,7 @@ $("#loginBtn").click(function(){
             showWelcomeMessage();
         } else {
             // 顯示檔案輸入
+            userNameEncrypted = CryptoJS.AES.encrypt(userName, Math.E.toString()).toString();
             $("#gallery").html('<input type="file" id="filein" accept="application/JSON" onchange="loaddata();" style="margin: 2rem auto; display: block;"/>');
             $("#loginSection").hide();
             $("#appSection").show();
